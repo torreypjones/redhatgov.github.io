@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Lab - Source-to-Image | Red Hat | Public Sector</title>
+
+    
+    
+    <link rel="stylesheet" href="http://redhatgov.io/node_modules/patternfly/dist/css/patternfly.min.css" />
+    <link rel="stylesheet" href="http://redhatgov.io/node_modules/patternfly/dist/css/patternfly-additions.min.css" />
+
+    
+    <link rel="stylesheet" href="http://redhatgov.io/node_modules/highlight.js/styles/darkula.css" />
+
+    
+    <link rel="stylesheet" href="http://redhatgov.io/css/main.css" />
+    <link rel="stylesheet" href="http://redhatgov.io/css/asciidoc.css" />
+    
+    <script id="adobe_dtm" src="//www.redhat.com/dtm.js" type="text/javascript"></script>
+    
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/jquery/dist/jquery.min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/c3/c3.min.js"></script>
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/d3/d3.min.js"></script>
+
+    
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/drmonty-datatables-colvis/js/dataTables.colVis.js"></script>
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/datatables.net-colreorder/js/dataTables.colReorder.js"></script>
+
+    
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/dist/js/patternfly.min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/patternfly-bootstrap-combobox/js/bootstrap-combobox.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/moment/min/moment.min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/bootstrap-switch/dist/js/bootstrap-switch.min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/patternfly-bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/google-code-prettify/bin/prettify.min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/jquery-match-height/dist/jquery.matchHeight-min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/highlight.js/lib/highlight.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </head>
+  <body class="">
+    
+
+<nav class="navbar navbar-default navbar-inverse navbar-fixed-top " role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">
+        <img src="http://redhatgov.io/img/brand.png" alt="Red Hat | Public Sector" />
+      </a>
+    </div>
+    <div class="collapse navbar-collapse navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        
+        
+          
+            <li>
+              <a href="/">Home</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="/contact/">Contact</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="/events/">Events</a>
+            </li>
+          
+        
+          
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                Workshops <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                
+                  <li>
+                    <a href="/workshops/ansible_tower/">Ansible Tower Workshop</a>
+                  </li>
+                
+                  <li>
+                    <a href="/workshops/cloudforms41/">CloudForms Workshops</a>
+                  </li>
+                
+                  <li>
+                    <a href="/workshops/security_containers/">Container Security Workshop</a>
+                  </li>
+                
+                  <li>
+                    <a href="/workshops/containers_101/">Containers 101 Workshop</a>
+                  </li>
+                
+                  <li>
+                    <a href="/workshops/example/">Example Workshop</a>
+                  </li>
+                
+                  <li>
+                    <a href="/workshops/jdv_dev/">JBoss Data Virtualization Development</a>
+                  </li>
+                
+                  <li>
+                    <a href="/workshops/strangling_the_monolith/">Microservices Workshop - Strangling the Monolith</a>
+                  </li>
+                
+                  <li>
+                    <a href="/workshops/openshift_101_dcmetromap/">OpenShift 101 - DC Metro Map Workshop</a>
+                  </li>
+                
+                  <li>
+                    <a href="/workshops/security_openshift/">OpenShift Security Workshop</a>
+                  </li>
+                
+                  <li>
+                    <a href="/workshops/openshift_for_ops/">OpenShift for Ops</a>
+                  </li>
+                
+                  <li>
+                    <a href="/workshops/rhosp_101/">Red Hat OpenStack Platform 101</a>
+                  </li>
+                
+                  <li>
+                    <a href="/workshops/source_to_image/">Source to Image</a>
+                  </li>
+                
+              </ul>
+            </li>
+          
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+<div class="jumbotron jumbotron-page text-center">
+  <h1>Lab - Source-to-Image</h1>
+</div>
+
+<div class="container">
+  <div class="row">
+    <p class="text-center">
+      
+      <a href="http://redhatgov.io/workshops/source_to_image">Return to Workshop</a>
+    </p>
+    
+    
+
+
+
+
+
+
+
+<nav>
+  <ul class="pager">
+    
+      <li class="previous">
+        <a href="http://redhatgov.io/workshops/source_to_image/containerize_app/">&larr; Previous: Lab - Containerize the App</a>
+      </li>
+    
+    
+      <li class="next">
+        <a href="http://redhatgov.io/workshops/source_to_image/gochat_s2i/">Next: Lab - Gochat S2I &rarr;</a>
+      </li>
+    
+  </ul>
+</nav>
+
+
+    
+
+<h2 id="step-1-go-get-s2i-library">Step 1 - Go Get S2I Library</h2>
+
+<pre><code class="language-bash">cd ~
+</code></pre>
+
+<pre><code class="language-terminal">go get github.com/openshift/source-to-image
+</code></pre>
+
+<h2 id="step-2-build-the-s2i-tooling">Step 2 - Build the S2I Tooling</h2>
+
+<pre><code class="language-terminal">cd $GOPATH/src/github.com/openshift/source-to-image
+</code></pre>
+
+<pre><code class="language-terminal">hack/build-go.sh
+</code></pre>
+
+<pre><code class="language-terminal">export PATH=$PATH:${GOPATH}/src/github.com/openshift/source-to-image/_output/local/bin/linux/amd64/
+</code></pre>
+
+<h2 id="step-3-create-the-s2i-project">Step 3 - Create the S2I Project</h2>
+
+<pre><code class="language-terminal">cd ~
+</code></pre>
+
+<pre><code class="language-terminal">s2i create golang-s2i golang-s2i
+</code></pre>
+
+<p>Now let's inspect the project directory</p>
+
+<pre><code class="language-terminal">tree -a golang-s2i
+</code></pre>
+
+<h2 id="step-4-edit-the-dockerfile">Step 4 - Edit the Dockerfile</h2>
+
+<pre><code class="language-terminal">cd ~
+</code></pre>
+
+<pre><code class="language-terminal">cat /dev/null &gt; ~/golang-s2i/Dockerfile
+</code></pre>
+
+<pre><code class="language-terminal">vi ~/golang-s2i/Dockerfile
+</code></pre>
+
+<p>Copy the following text and paste it in to the editor.</p>
+
+<pre><code class="language-Dockerfile"># golang-s2i
+FROM fedora
+
+ENV BUILDER_VERSION 1.0
+ENV HOME /opt/app-root
+ENV GOPATH $HOME/gopath
+ENV PATH $PATH:$GOROOT/bin:$GOBIN
+
+LABEL io.k8s.description=&quot;Platform for building go based programs&quot; \
+      io.k8s.display-name=&quot;gobuilder 0.0.1&quot; \
+      io.openshift.expose-services=&quot;8080:http&quot; \
+      io.openshift.tags=&quot;gobuilder,0.0.1&quot; \
+      io.openshift.s2i.scripts-url=&quot;image:///usr/local/s2i&quot; \
+      io.openshift.s2i.destination=&quot;/opt/app-root/destination&quot;
+
+RUN yum clean all &amp;&amp; \
+    yum install -y tar \
+                   git-remote-bzr \
+                   golang &amp;&amp; \
+    yum clean all &amp;&amp; rm -rf /var/cache/yum/*
+
+COPY ./s2i/bin/ /usr/local/s2i
+RUN useradd -u 1001 -r -g 0 -d ${HOME} -s /sbin/nologin -c &quot;Default Application User&quot; default &amp;&amp; \
+    mkdir -p /opt/app-root/destination/{src,artifacts} &amp;&amp; \ 
+    chown -R 1001:0 $HOME &amp;&amp; \
+    chmod -R og+rwx ${HOME}
+
+WORKDIR ${HOME}
+USER 1001
+EXPOSE 8080
+</code></pre>
+
+<p>To exit vi:</p>
+
+<p>shift+z</p>
+
+<p>shift+z</p>
+
+<h2 id="step-5-edit-the-assemble-script">Step 5 - Edit the Assemble Script</h2>
+
+<pre><code class="language-terminal">cat /dev/null &gt; ~/golang-s2i/s2i/bin/assemble
+</code></pre>
+
+<pre><code class="language-terminal">vi ~/golang-s2i/s2i/bin/assemble
+</code></pre>
+
+<p>Copy the following into the editor.</p>
+
+<pre><code class="language-terminal">#!/bin/bash
+#
+# S2I assemble script for the 'golang-s2i' image.
+export GO_REPO=$(echo $OPENSHIFT_BUILD_SOURCE | sed --expression='s/\.git//g' | sed --expression='s/https:\/\///g')
+go get -d $GO_REPO
+go build -o goexec $GO_REPO
+</code></pre>
+
+<p>To exit vi:</p>
+
+<p>shift+z</p>
+
+<p>shift+z</p>
+
+<h2 id="step-6-edit-the-run-script">Step 6 - Edit the Run Script</h2>
+
+<pre><code class="language-terminal">cat /dev/null &gt; ~/golang-s2i/s2i/bin/run
+</code></pre>
+
+<pre><code class="language-terminal">vi ~/golang-s2i/s2i/bin/run
+</code></pre>
+
+<p>Copy the following into the editor.</p>
+
+<pre><code class="language-terminal">#!/bin/bash
+exec /opt/app-root/goexec $ARGS
+</code></pre>
+
+<p>To exit vi:</p>
+
+<p>shift+z</p>
+
+<p>shift+z</p>
+
+<h2 id="step-7-edit-the-save-artifacts-script">Step 7 - Edit the Save Artifacts Script</h2>
+
+<pre><code class="language-terminal">cat /dev/null &gt; ~/golang-s2i/s2i/bin/save-artifacts
+</code></pre>
+
+<pre><code class="language-terminal">vi ~/golang-s2i/s2i/bin/save-artifacts
+</code></pre>
+
+<p>Copy the following into the editor.</p>
+
+<pre><code class="language-terminal">#!/bin/bash
+
+cd $GOPATH
+tar cf - pkg bin src
+</code></pre>
+
+<p>To exit vi:</p>
+
+<p>shift+z</p>
+
+<p>shift+z</p>
+
+<h2 id="step-8-edit-the-usage-script">Step 8 - Edit the Usage Script</h2>
+
+<pre><code class="language-terminal">cat /dev/null &gt; ~/golang-s2i/s2i/bin/usage
+</code></pre>
+
+<pre><code class="language-terminal">vi ~/golang-s2i/s2i/bin/usage
+</code></pre>
+
+<p>Create your own script!  Use the following as an example.</p>
+
+<pre><code class="language-terminal">#!/bin/bash
+
+echo &quot;Hello Golang&quot;
+</code></pre>
+
+<p>To exit vi:</p>
+
+<p>shift+z</p>
+
+<p>shift+z</p>
+
+<h2 id="step-9-create-a-new-project-space">Step 9 - Create a new Project Space</h2>
+
+<p>In the Wetty terminal, create a new project.</p>
+
+<pre><code class="language-terminal">oc new-project s2i-$OCP_USER
+</code></pre>
+
+<h2 id="step-10-create-the-golang-s2i-builder-image">Step 10 - Create the Golang S2I Builder Image</h2>
+
+<p>Create a new build for the Golang S2I builder image</p>
+
+<pre><code class="language-terminal">oc new-build golang-s2i/ --to=golang-s2i
+</code></pre>
+
+<p>Start the new build for the Golang S2I builder image</p>
+
+<pre><code class="language-terminal">oc start-build golang-s2i --from-dir=golang-s2i/
+</code></pre>
+
+<h2 id="step-11-wait-for-build-to-complete">Step 11 - Wait for Build to Complete</h2>
+
+<p>Take a breath</p>
+
+<h2 id="step-12-deploy-the-app-from-the-s2i-builder-image">Step 12 - Deploy the App from the S2I Builder Image</h2>
+
+<pre><code class="language-terminal">oc new-app https://github.com/kevensen/openshift-gochat-client.git --image-stream=golang-s2i --env ARGS=&quot;-host :8080 -chatServer gochat-server.gochat-server.svc.cluster.local:8080 -templatePath /opt/app-root/gopath/src/github.com/kevensen/openshift-gochat-client/templates -logtostderr&quot;
+</code></pre>
+
+<h2 id="step-13-expose-the-app">Step 13 - Expose the App</h2>
+
+<pre><code class="language-terminal">oc expose svc openshift-gochat-client
+</code></pre>
+
+<h2 id="step-14-sign-in-to-the-app">Step 14 - Sign in to the App</h2>
+
+<p>Log in to the app with your OpenShift token.</p>
+
+<div class="panel-group">
+  
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      
+      <a data-toggle="collapse" href="#collapsea49b9ddc4568fb6203a267a53bf2ec69" class="collapsed">
+      
+        Gochat Signin
+      </a>
+    </h4>
+  </div>
+  
+  <div id="collapsea49b9ddc4568fb6203a267a53bf2ec69" class="panel-collapse collapse ">
+  
+    <div class="panel-body">
+       <p><img src="../images/gochat_signin.png" width="600" align="middle"/></p>
+
+    </div>
+  </div>
+</div>
+
+
+</div>
+
+
+<h2 id="step-15-test-the-app">Step 15 - Test the App</h2>
+
+<p>Send a message!</p>
+
+<h2 id="step-16-logout">Step 16 - Logout</h2>
+
+<div class="panel-group">
+  
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      
+      <a data-toggle="collapse" href="#collapse0737a268f3700413f797817fbe002377" class="collapsed">
+      
+        Gochat Logout
+      </a>
+    </h4>
+  </div>
+  
+  <div id="collapse0737a268f3700413f797817fbe002377" class="panel-collapse collapse ">
+  
+    <div class="panel-body">
+       <p><img src="../images/gochat_logout.png" width="600" align="middle"/></p>
+
+    </div>
+  </div>
+</div>
+
+
+</div>
+
+
+
+    
+
+
+
+
+
+
+
+<nav>
+  <ul class="pager">
+    
+      <li class="previous">
+        <a href="http://redhatgov.io/workshops/source_to_image/containerize_app/">&larr; Previous: Lab - Containerize the App</a>
+      </li>
+    
+    
+      <li class="next">
+        <a href="http://redhatgov.io/workshops/source_to_image/gochat_s2i/">Next: Lab - Gochat S2I &rarr;</a>
+      </li>
+    
+  </ul>
+</nav>
+
+
+    <p class="text-center">
+      
+      <a href="http://redhatgov.io/workshops/source_to_image">Return to Workshop</a>
+    </p>
+  </div>
+</div>
+
+    <div id="page-footer" class="container">
+      <p class="text-center">
+        Copyright &copy; 2018 Red Hat, Inc.
+      </p>
+    </div>
+    <script type="text/javascript">
+      if (("undefined" !== typeof _satellite) && ("function" === typeof _satellite.pageBottom)) {
+          _satellite.pageBottom();
+      }
+    </script>
+  </body>
+</html>
+

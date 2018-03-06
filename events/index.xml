@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Events on Red Hat | Public Sector</title>
+    <link>http://redhatgov.io/events/</link>
+    <description>Recent content in Events on Red Hat | Public Sector</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 22 Mar 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://redhatgov.io/events/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Fort Belvoir Expo</title>
+      <link>http://redhatgov.io/events/20180322-fort-belvoir-expo-5284500cb4d506795b4012168d651b57/</link>
+      <pubDate>Thu, 22 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://redhatgov.io/events/20180322-fort-belvoir-expo-5284500cb4d506795b4012168d651b57/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ansible/Storage Workshop - DC</title>
+      <link>http://redhatgov.io/events/20180321-ansible-storage-workshop-dc-2560c45466d448ebbd196cf6318155b2/</link>
+      <pubDate>Wed, 21 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://redhatgov.io/events/20180321-ansible-storage-workshop-dc-2560c45466d448ebbd196cf6318155b2/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Container-native storage for the OpenShift masses</title>
+      <link>http://redhatgov.io/events/20180321-container-native-storage-for-the-openshift-masses-2ec024230b853f3908e3144262f76f8a/</link>
+      <pubDate>Wed, 21 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://redhatgov.io/events/20180321-container-native-storage-for-the-openshift-masses-2ec024230b853f3908e3144262f76f8a/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>GovLoop Virtual Summit: Tech Trends You Need to Know in Government</title>
+      <link>http://redhatgov.io/events/20180321-govloop-virtual-summit-tech-trends-you-need-to-know-in-government-e1ac48000a7ee5f13ff448e87a9296be/</link>
+      <pubDate>Wed, 21 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://redhatgov.io/events/20180321-govloop-virtual-summit-tech-trends-you-need-to-know-in-government-e1ac48000a7ee5f13ff448e87a9296be/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>New York IT Leadership Academy 2018</title>
+      <link>http://redhatgov.io/events/20180320-new-york-it-leadership-academy-2018-4f4579187d67ef8c3d9c654f659b16f7/</link>
+      <pubDate>Tue, 20 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://redhatgov.io/events/20180320-new-york-it-leadership-academy-2018-4f4579187d67ef8c3d9c654f659b16f7/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>CXO Tech Forum: Uncle Sam Meets Sillicon Valley</title>
+      <link>http://redhatgov.io/events/20180315-cxo-tech-forum-uncle-sam-meets-sillicon-valley-e048f2fc9cf18a4e889f8e96fcf98414/</link>
+      <pubDate>Thu, 15 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://redhatgov.io/events/20180315-cxo-tech-forum-uncle-sam-meets-sillicon-valley-e048f2fc9cf18a4e889f8e96fcf98414/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ansile Automation Workshop</title>
+      <link>http://redhatgov.io/events/20180314-ansile-automation-workshop-e1196bb3ab92f83662588a253c6193f9/</link>
+      <pubDate>Wed, 14 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://redhatgov.io/events/20180314-ansile-automation-workshop-e1196bb3ab92f83662588a253c6193f9/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>OpenShift Container Platform Roadshow</title>
+      <link>http://redhatgov.io/events/20180314-openshift-container-platform-roadshow-12b51ce442bbabae2f3f752b56128690/</link>
+      <pubDate>Wed, 14 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://redhatgov.io/events/20180314-openshift-container-platform-roadshow-12b51ce442bbabae2f3f752b56128690/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ansible Automation Technical Workshop</title>
+      <link>http://redhatgov.io/events/20180313-ansible-automation-technical-workshop-2681f2e632580b4032185d28908e6048/</link>
+      <pubDate>Tue, 13 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://redhatgov.io/events/20180313-ansible-automation-technical-workshop-2681f2e632580b4032185d28908e6048/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ansible Automation Technical Workshop</title>
+      <link>http://redhatgov.io/events/20180313-ansible-automation-technical-workshop-5ffd580f03225d45f720614f6010aa1b/</link>
+      <pubDate>Tue, 13 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://redhatgov.io/events/20180313-ansible-automation-technical-workshop-5ffd580f03225d45f720614f6010aa1b/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Secure Mobile Application Development for Government</title>
+      <link>http://redhatgov.io/events/20180313-secure-mobile-application-development-for-government-9871fa03205416c6d1e0828d69e7bf17/</link>
+      <pubDate>Tue, 13 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://redhatgov.io/events/20180313-secure-mobile-application-development-for-government-9871fa03205416c6d1e0828d69e7bf17/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ansible Automation Technical Workshop</title>
+      <link>http://redhatgov.io/events/20180312-ansible-automation-technical-workshop-50e22a6adc062ad53c5e395676b4118b/</link>
+      <pubDate>Mon, 12 Mar 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://redhatgov.io/events/20180312-ansible-automation-technical-workshop-50e22a6adc062ad53c5e395676b4118b/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

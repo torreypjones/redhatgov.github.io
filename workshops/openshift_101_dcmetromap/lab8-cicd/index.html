@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Lab 8 - CI / CD Pipeline | Red Hat | Public Sector</title>
+
+    
+    
+    <link rel="stylesheet" href="http://redhatgov.io/node_modules/patternfly/dist/css/patternfly.min.css" />
+    <link rel="stylesheet" href="http://redhatgov.io/node_modules/patternfly/dist/css/patternfly-additions.min.css" />
+
+    
+    <link rel="stylesheet" href="http://redhatgov.io/node_modules/highlight.js/styles/darkula.css" />
+
+    
+    <link rel="stylesheet" href="http://redhatgov.io/css/main.css" />
+    <link rel="stylesheet" href="http://redhatgov.io/css/asciidoc.css" />
+    
+    <script id="adobe_dtm" src="//www.redhat.com/dtm.js" type="text/javascript"></script>
+    
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/jquery/dist/jquery.min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/c3/c3.min.js"></script>
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/d3/d3.min.js"></script>
+
+    
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/datatables/media/js/jquery.dataTables.min.js"></script>
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/drmonty-datatables-colvis/js/dataTables.colVis.js"></script>
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/datatables.net-colreorder/js/dataTables.colReorder.js"></script>
+
+    
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/dist/js/patternfly.min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/patternfly-bootstrap-combobox/js/bootstrap-combobox.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/moment/min/moment.min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/bootstrap-switch/dist/js/bootstrap-switch.min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/patternfly-bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/google-code-prettify/bin/prettify.min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/patternfly/node_modules/jquery-match-height/dist/jquery.matchHeight-min.js"></script>
+
+    
+    <script src="http://redhatgov.io/node_modules/highlight.js/lib/highlight.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </head>
+  <body class="">
+    
+
+<nav class="navbar navbar-default navbar-inverse navbar-fixed-top " role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">
+        <img src="http://redhatgov.io/img/brand.png" alt="Red Hat | Public Sector" />
+      </a>
+    </div>
+    <div class="collapse navbar-collapse navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        
+        
+          
+            <li>
+              <a href="/">Home</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="/about/">About</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="/contact/">Contact</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="/events/">Events</a>
+            </li>
+          
+        
+          
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                Workshops <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                
+                  <li>
+                    <a href="/workshops/ansible_tower/">Ansible Tower Workshop</a>
+                  </li>
+                
+                  <li>
+                    <a href="/workshops/cloudforms41/">CloudForms Workshops</a>
+                  </li>
+                
+                  <li>
+                    <a href="/workshops/security_containers/">Container Security Workshop</a>
+                  </li>
+                
+                  <li>
+                    <a href="/workshops/containers_101/">Containers 101 Workshop</a>
+                  </li>
+                
+                  <li>
+                    <a href="/workshops/example/">Example Workshop</a>
+                  </li>
+                
+                  <li>
+                    <a href="/workshops/jdv_dev/">JBoss Data Virtualization Development</a>
+                  </li>
+                
+                  <li>
+                    <a href="/workshops/strangling_the_monolith/">Microservices Workshop - Strangling the Monolith</a>
+                  </li>
+                
+                  <li>
+                    <a href="/workshops/openshift_101_dcmetromap/">OpenShift 101 - DC Metro Map Workshop</a>
+                  </li>
+                
+                  <li>
+                    <a href="/workshops/security_openshift/">OpenShift Security Workshop</a>
+                  </li>
+                
+                  <li>
+                    <a href="/workshops/openshift_for_ops/">OpenShift for Ops</a>
+                  </li>
+                
+                  <li>
+                    <a href="/workshops/rhosp_101/">Red Hat OpenStack Platform 101</a>
+                  </li>
+                
+                  <li>
+                    <a href="/workshops/source_to_image/">Source to Image</a>
+                  </li>
+                
+              </ul>
+            </li>
+          
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+<div class="jumbotron jumbotron-page text-center">
+  <h1>Lab 8 - CI / CD Pipeline</h1>
+</div>
+
+<div class="container">
+  <div class="row">
+    <p class="text-center">
+      
+      <a href="http://redhatgov.io/workshops/openshift_101_dcmetromap">Return to Workshop</a>
+    </p>
+    
+    
+
+
+
+
+
+
+
+<nav>
+  <ul class="pager">
+    
+      <li class="previous">
+        <a href="http://redhatgov.io/workshops/openshift_101_dcmetromap/lab7-labels/">&larr; Previous: Lab 7 - Labels</a>
+      </li>
+    
+    
+      <li class="next">
+        <a href="http://redhatgov.io/workshops/openshift_101_dcmetromap/lab9-bluegreen/">Next: Lab 9 - Blue | Green Deployment &rarr;</a>
+      </li>
+    
+  </ul>
+</nav>
+
+
+    
+
+<h1 id="ci-cd-defined">CI/CD Defined</h1>
+
+<p>In modern software projects many teams utilize the concept of Continuous Integration (CI) and Continuous Delivery (CD). By setting up a tool chain that continuously builds, tests, and stages software releases a team can ensure that their product can be reliably released at any time. OpenShift can be an enabler in the creation and management of this tool chain.</p>
+
+<p>In this lab we walk through creating a simple example of a CI/CD <a href="https://jenkins.io/doc/book/pipeline/">pipeline</a> utlizing Jenkins, all running on top of OpenShift! The Jenkins job will trigger OpenShift to build and deploy a test version of the application, validate that the deployment works, and then tag the test version into production.</p>
+
+<p>In the steps below replace 'YOUR#' with your student number (if applicable).</p>
+
+<h2 id="create-a-new-project">Create a new project</h2>
+
+<p>Create a new project named “cicd-<span class=userid>YOUR#</span>
+”.</p>
+
+<div class="panel-group">
+  
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      
+      <a data-toggle="collapse" href="#collapse37abc475593783b2edce6272dea1036d" class="collapsed">
+      
+        CLI Steps
+      </a>
+    </h4>
+  </div>
+  
+  <div id="collapse37abc475593783b2edce6272dea1036d" class="panel-collapse collapse ">
+  
+    <div class="panel-body">
+       <h2 id="create-the-project-cicd-span-class-userid-your-span">Create the project cicd-<span class=userid>YOUR#</span></h2>
+
+<p><code>
+$ oc new-project cicd-<span class=userid>YOUR#</span></p>
+
+<p></code></p>
+
+    </div>
+  </div>
+</div>
+
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      
+      <a data-toggle="collapse" href="#collapsed172d49174fb6d56cdba38c44d330848" class="collapsed">
+      
+        Web Console Steps
+      </a>
+    </h4>
+  </div>
+  
+  <div id="collapsed172d49174fb6d56cdba38c44d330848" class="panel-collapse collapse ">
+  
+    <div class="panel-body">
+       <blockquote>
+Browse to original landing page by clicking by "OpenShift Container Platform" in the top left hand corner
+</blockquote>
+
+<p><img src="../images/ocp-lab-cicd-new-project-landing.png" width="300"><br/></p>
+
+<blockquote>
+click "Create Project".
+</blockquote>
+
+<p><img src="../images/ocp-lab-cicd-new-project.png" width="400"><br/></p>
+
+<p><blockquote>
+Fill in the Name and Display Name of the project as &quot;cicd-<span class=userid>YOUR#</span>
+&quot; and click &quot;Create&quot;
+</blockquote>
+<img src="../images/ocp-lab-cicd-new-project-detail.png" width="500"><br/></p>
+
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+
+<h2 id="use-the-cicd-hahahugoshortcode-3hbhb-project">Use the cicd-<span class=userid>YOUR#</span>
+ project</h2>
+
+<pre><code class="language-bash">$ oc project cicd-<span class=userid>YOUR#</span>
+
+</code></pre>
+
+<h2 id="instantiate-a-jenkins-server-in-your-project">Instantiate a Jenkins server in your project</h2>
+
+<div class="panel-group">
+  
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      
+      <a data-toggle="collapse" href="#collapse0f13e2227d97f198cf50ed49322c5a12" class="collapsed">
+      
+        CLI Steps
+      </a>
+    </h4>
+  </div>
+  
+  <div id="collapse0f13e2227d97f198cf50ed49322c5a12" class="panel-collapse collapse ">
+  
+    <div class="panel-body">
+       <pre><code class="language-bash">$ oc new-app jenkins-ephemeral
+</code></pre>
+
+    </div>
+  </div>
+</div>
+
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      
+      <a data-toggle="collapse" href="#collapse6cac92ad46d3f16d0840f1a6e9cafa1e" class="collapsed">
+      
+        Web Console Steps
+      </a>
+    </h4>
+  </div>
+  
+  <div id="collapse6cac92ad46d3f16d0840f1a6e9cafa1e" class="panel-collapse collapse ">
+  
+    <div class="panel-body">
+       <blockquote>
+Click "Add to Project", select "Browse Catalog" tab and search on "jenkins". Then select "Jenkins (Ephemeral)".
+</blockquote>
+
+<p><img src="../images/ocp-lab-cicd-jenkins-instantiate.png" width="600"><br/></p>
+
+<p><img src="../images/ocp-lab-cicd-jenkins-instantiate1.png" width="700"><br/></p>
+
+<blockquote>
+Select Next
+</blockquote>
+
+<p><img src="../images/ocp-lab-cicd-jenkins-instantiate2.png" width="700"><br/></p>
+
+<blockquote>
+Select the Project cicd-<span class=userid>YOUR#</span>
+ from "Add to Project"
+</blockquote>
+
+<p><img src="../images/ocp-lab-cicd-jenkins-instantiate3.png" width="700"><br/></p>
+
+<blockquote>
+Select the Create
+</blockquote>
+
+<p><img src="../images/ocp-lab-cicd-jenkins-instantiate4.png" width="700"><br/></p>
+
+<blockquote>
+Click the "Continue to the project overview" link
+</blockquote>
+
+<p><img src="../images/ocp-lab-cicd-jenkins-overview.png" width="900"><br/></p>
+
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+
+<h2 id="create-a-sample-application-configuration">Create a sample application configuration</h2>
+
+<p>Use the &quot;oc new-app&quot; command to create a simple nodejs application from a template file:</p>
+
+<pre><code class="language-bash">$ oc new-app -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/application-template.json
+</code></pre>
+
+<blockquote>
+<p>Click on &quot;Overview&quot; within the OpenShift console to display the sample application configuration</p>
+</blockquote>
+
+<p><img src="../images/ocp-lab-cicd-app-create.png" width="900"><br/></p>
+
+<h2 id="manage-and-view-a-jenkins-build">Manage and view a Jenkins build</h2>
+
+<blockquote>
+<p>Access Jenkins</p>
+</blockquote>
+
+<div class="panel-group">
+  
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      
+      <a data-toggle="collapse" href="#collapse1fb382cd26a0eb97a0f0a143c858eb8d" class="collapsed">
+      
+        CLI Steps
+      </a>
+    </h4>
+  </div>
+  
+  <div id="collapse1fb382cd26a0eb97a0f0a143c858eb8d" class="panel-collapse collapse ">
+  
+    <div class="panel-body">
+       <blockquote>
+<i class="fa fa-terminal"></i> Get the route to the Jenkins server
+</blockquote>
+
+<pre><code class="language-bash">$ oc get route
+NAME       HOST/PORT                            PATH      SERVICES   PORT      TERMINATION     WILDCARD
+frontend   frontend-cicd.192.168.42.27.xip.io             frontend   &lt;all&gt;     edge            None
+jenkins    jenkins-cicd.192.168.42.27.xip.io              jenkins    &lt;all&gt;     edge/Redirect   None
+</code></pre>
+
+<p>Use Jenkins HOST/PORT to access through web browser</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      
+      <a data-toggle="collapse" href="#collapse9b218cdeb1d564c9e51f113e7f7d7c45" class="collapsed">
+      
+        Web Console Steps
+      </a>
+    </h4>
+  </div>
+  
+  <div id="collapse9b218cdeb1d564c9e51f113e7f7d7c45" class="panel-collapse collapse ">
+  
+    <div class="panel-body">
+       <blockquote>
+Click the URL that is listed in the jenkins header
+</blockquote>
+
+<p><img src="../images/ocp-lab-cicd-jenkins-overview.png" width="900"><br/></p>
+
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+
+<blockquote>
+<p>Select &quot;Login with OpenShift&quot; from Jenkins login page</p>
+</blockquote>
+
+<p><img src="../images/ocp-lab-cicd-jenkins-login-1.png" width="400">
+</br></p>
+
+<p>The OpenShift login page is displayed in a new browser tab.</p>
+
+<blockquote>
+<p>Login with your OpenShift user name and password</p>
+</blockquote>
+
+<p><img src="../images/ocp-login.png" width="600">
+<br/></p>
+
+<p>Once logged in, click the [Allow selected permissions] button and you should see the Jenkins console</p>
+
+<blockquote>
+<p>In the Jenkins console, open the &quot;OpenShift Sample&quot; menu and select &quot;Configure&quot;</p>
+</blockquote>
+
+<p><img src="../images/ocp-lab-cicd-jenkins.png" width="900">
+<br/></p>
+
+<p>You'll see a series of Jenkins build steps defined. These build steps are from the Jenkins plugin for Openshift. Refer to the <a href="https://github.com/openshift/jenkins-plugin">OpenShift Jenkins plugin</a> documentation for details on the various functionality provided.</p>
+
+<blockquote>
+<p>The default values for each of the various build steps listed for the sample job are sufficient for our demonstration. Click &quot;Save&quot; to save the job settings and the Project OpenShift Sample page will be displayed.</p>
+</blockquote>
+
+<p><img src="../images/ocp-lab-cicd-jenkins-config.png" width="600"><br/></p>
+
+<blockquote>
+<p>Select &quot;Build Now&quot; from the Jenkins console and note the Build History pane updating</p>
+</blockquote>
+
+<p><img src="../images/ocp-lab-cicd-jenkins-buildNow-history.png" width="600"><br/></p>
+
+<blockquote>
+<p>Hover over the build number of the current build, for example &quot;#1&quot;, open the drop down menu and select &quot;Console Output&quot;</p>
+</blockquote>
+
+<p><img src="../images/ocp-lab-cicd-jenkins-console-output.png" width="900"><br/></p>
+
+<p>The Jenkins build has triggered an OpenShift build of the application. Jenkins waits for the build to result in a deployment and then confirms the new deployment works.</br>
+If so, Jenkins &quot;tags&quot; the image for production. This tagging will trigger another deployment, this time creating/updating the production service FRONTEND-PROD.</p>
+
+<p><img src="../images/ocp-lab-cicd-jenkins-app-overview.png" width="900"><br/></p>
+
+<h2 id="confirm-both-the-test-and-production-services-are-available">Confirm both the test and production services are available</h2>
+
+<blockquote>
+<p>Browse to both services</p>
+</blockquote>
+
+<div class="panel-group">
+  
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      
+      <a data-toggle="collapse" href="#collapse8ec844b2e1648294d0c49e16c2be0eee" class="collapsed">
+      
+        CLI Steps
+      </a>
+    </h4>
+  </div>
+  
+  <div id="collapse8ec844b2e1648294d0c49e16c2be0eee" class="panel-collapse collapse ">
+  
+    <div class="panel-body">
+       <blockquote>
+<i class="fa fa-terminal"></i> Use the "oc get service" command to get the internal IP and port needed to access the frontend and frontend-prod services:
+</blockquote>
+
+<p><code>
+$ oc get services -n cicd-<span class=userid>YOUR#</span>
+ | grep frontend</br>
+frontend        172.30.151.206   <none>        8080/TCP    40m</br>
+frontend-prod   172.30.230.228   <none>        8080/TCP    40m</br>
+</code></p>
+
+<p>Use IPs and ports to access services through web browser</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      
+      <a data-toggle="collapse" href="#collapseef46e08a7b233b67e132d0984d472ea1" class="collapsed">
+      
+        Web Console Steps
+      </a>
+    </h4>
+  </div>
+  
+  <div id="collapseef46e08a7b233b67e132d0984d472ea1" class="panel-collapse collapse ">
+  
+    <div class="panel-body">
+       <blockquote>
+Select services' links from Overview page.
+</blockquote>
+
+<p><img src="../images/ocp-lab-cicd-jenkins-app-overview.png" width="900"><br/></p>
+
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+
+
+<p>Service web page displayed:</p>
+
+<p><img src="../images/ocp-lab-cicd-app-test.png" width="900"><br/></p>
+
+<h1 id="summary">Summary</h1>
+
+<p>In this lab you have very quickly and easily constructed a basic Build/Test/Deply pipeline. Although our example was very basic it introduces you to a powerful DevOps feature of OpenShift through the leveraging of Jenkins. This can be extended to support complex real-world continuous delivery requirements. Read more about the use of Jenkins on OpenShift <a href="https://docs.openshift.com/enterprise/latest/using_images/other_images/jenkins.html">here</a> and more about Jenkins <a href="https://jenkins.io/doc">here</a>.</p>
+
+<script type="text/javascript">
+
+function replaceclasstext(cname,cvalue) {
+    var x = document.getElementsByClassName(cname);
+    var i;
+    for (i = 0; i < x.length; i++) {
+        x[i].innerHTML= cvalue;
+    }
+}
+
+function setCookie(cname,cvalue) {
+    var date = new Date();
+    date.setTime(date.getTime() + 86400000);
+    var expires =  date.toGMTString();
+    document.cookie = cname + "=" + cvalue + ";expires=" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+function loadVariables() {
+
+    var userid=getCookie("userid");
+    var prefix=getCookie("prefix");
+    var domain=getCookie("domain");
+
+    if (userid != "") {
+    	document.getElementById("userid").value = userid;
+    } 
+    if (prefix != "") {
+    	document.getElementById("prefix").value = prefix;
+    } else {
+    	document.getElementById("prefix").value = "example";
+    } 
+    if (domain != "") {
+    	document.getElementById("domain").value = domain;
+        replaceclasstext("domain",domain)
+        replaceclasstext("prefix",prefix)
+        replaceclasstext("userid",userid)
+    } 
+}
+
+function defaultVariables() {
+
+    document.getElementById("userid").value = "0";
+    document.getElementById("prefix").value = "example";
+    document.getElementById("domain").value = "redhatgov.io";
+    setCookie("userid", document.getElementById("userid").value);
+    setCookie("prefix", document.getElementById("prefix").value);
+    setCookie("domain", document.getElementById("domain").value);
+    
+    var userid = document.getElementById("userid").value;
+    var prefix = document.getElementById("prefix").value;
+    var domain = document.getElementById("domain").value;
+    var fqdn = userid + "." + prefix + "." + domain;
+
+    replaceclasstext("domain",domain)
+    replaceclasstext("prefix",prefix)
+    replaceclasstext("userid",userid)
+
+}
+
+function setupWorkshop() {
+    var userid = document.getElementById("userid").value;
+    var prefix = document.getElementById("prefix").value;
+    var domain = document.getElementById("domain").value;
+
+    setCookie("userid", userid);
+    setCookie("prefix", prefix);
+    setCookie("domain", domain);
+
+    replaceclasstext("domain",domain)
+    replaceclasstext("prefix",prefix)
+    replaceclasstext("userid",userid)
+
+}
+</script>
+<hr>
+<h3>Workshop Details</h3>
+<table border=1>
+<tr>
+<td>
+  <table><tr><td>Student ID: </td><td>
+  <select id="userid">
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="12">12</option>
+    <option value="13">13</option>
+    <option value="14">14</option>
+    <option value="15">15</option>
+    <option value="16">16</option>
+    <option value="17">17</option>
+    <option value="18">18</option>
+    <option value="19">19</option>
+    <option value="20">20</option>
+    <option value="21">21</option>
+    <option value="22">22</option>
+    <option value="23">23</option>
+    <option value="24">24</option>
+    <option value="25">25</option>
+    <option value="26">26</option>
+    <option value="27">27</option>
+    <option value="28">28</option>
+    <option value="29">29</option>
+    <option value="30">30</option>
+    <option value="31">31</option>
+    <option value="32">32</option>
+    <option value="33">33</option>
+    <option value="34">34</option>
+    <option value="35">35</option>
+    <option value="36">36</option>
+    <option value="37">37</option>
+    <option value="38">38</option>
+    <option value="39">39</option>
+    <option value="40">40</option>
+    <option value="41">41</option>
+    <option value="42">42</option>
+    <option value="43">43</option>
+    <option value="44">44</option>
+    <option value="45">45</option>
+    <option value="46">46</option>
+    <option value="47">47</option>
+    <option value="48">48</option>
+    <option value="49">49</option>
+    <option value="50">50</option>      
+  </select>
+  </td></tr></table>
+</td>
+<td>
+  <table><tr><td>Workshop: </td><td>
+   <input id="prefix" type="text" size=8>
+  </td></tr></table>
+</td>
+<td>
+  <select id="domain">
+    <option value="redhatgov.io">redhatgov.io</option>
+    <option value="redhat-fierce.io">redhat-fierce.io</option>
+    <option value="rhtps.io">rhtps.io</option>
+  </select>
+</td>
+<td>
+  <button onclick="setupWorkshop()">Enter</button><br>
+  <button onclick="defaultVariables()">Default</button>
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<td align=right><b>Domain: </b></td>
+<td><span class="domain"></span></td>
+<td rowspan=3>
+<img src="https://www.redhat.com/files/brand/email/sig-redhat.png" onload=loadVariables()>
+</td>
+</tr>
+<tr>
+<td align=right><b>Workshop Name: </b></td>
+<td><span class="prefix"></span></td>
+</tr>
+<tr>
+<td align=right><b>User ID: </b></td>
+<td><span class="userid"></span></td>
+</tr>
+</table>
+<hr>
+
+
+
+
+    
+
+
+
+
+
+
+
+<nav>
+  <ul class="pager">
+    
+      <li class="previous">
+        <a href="http://redhatgov.io/workshops/openshift_101_dcmetromap/lab7-labels/">&larr; Previous: Lab 7 - Labels</a>
+      </li>
+    
+    
+      <li class="next">
+        <a href="http://redhatgov.io/workshops/openshift_101_dcmetromap/lab9-bluegreen/">Next: Lab 9 - Blue | Green Deployment &rarr;</a>
+      </li>
+    
+  </ul>
+</nav>
+
+
+    <p class="text-center">
+      
+      <a href="http://redhatgov.io/workshops/openshift_101_dcmetromap">Return to Workshop</a>
+    </p>
+  </div>
+</div>
+
+    <div id="page-footer" class="container">
+      <p class="text-center">
+        Copyright &copy; 2018 Red Hat, Inc.
+      </p>
+    </div>
+    <script type="text/javascript">
+      if (("undefined" !== typeof _satellite) && ("function" === typeof _satellite.pageBottom)) {
+          _satellite.pageBottom();
+      }
+    </script>
+  </body>
+</html>
+
