@@ -91,8 +91,8 @@ function defaultVariables() {
     var bastion = document.getElementById("bastion").value;
     var domain = document.getElementById("domain").value;
     var region = document.getElementById("region").value;
-    var openshiftfqdn = userid + "." + openshift + "." + domain;
-    var bastionfqdn = userid + "." + bastion + "." + domain;
+    var openshiftfqdn = openshift + "." + region + "." + domain;
+    var bastionfqdn = bastion + "." + region + "." + domain;
 
     replaceclasstext("domain",domain)
     replaceclasstext("openshift",openshift)
