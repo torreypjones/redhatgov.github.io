@@ -1,0 +1,62 @@
+---
+title: openshiftv3 workshop
+menu:
+  main:
+    parent: workshops
+    pre: fa fa-magic
+---
+
+:domain_name: cloudapp.azure.com
+:workshop_prefix: workshop
+:openshift_url: https://{{ openshift_openshift }}.{{ region }}.cloudapp.azure.com
+:ssh_url: https://{{ bastion_bastion }}.{{ region }}.cloudapp.azure.com/wetty/
+
+:icons: font
+:iconsdir: http://people.redhat.com/~jduncan/images/icons
+:imagesdir: /workshops/ansible_tower_azu/images
+
+= Red Hat Ansible Tower Workshop on Azure
+
+== Workshop Description
+
+Learn how to create, manage, and identify Openshift containers.
+
+## Who should attend
+
+-   Architects
+-   Developers
+-   Technical Leads
+-   Operations Engineers
+
+
+== What you will learn
+
+- Creating application containers
+- Code Promotion across environments
+- Creating a pipeline
+- Creating an application form a Docker Image
+- Scaling up and down container resources
+- Blue Green deployment strategies
+
+== Overview
+
+Tour of Openshift containerization platform
+
+== Your Responsibilities
+Have a Discussion. This will be boring if it’s just us, up here talking for over 4 hours.
+
+Participate. We are going to cut you loose with Openshift, in just a little while. Have questions. Have opinions.
+
+Hopefully you have your laptop with you. If not, please find a shoulder-surfing buddy. See? Not only can we dig into Openshift but you can make a new friend!
+
+== Exercises
+
+{{< labs openshiftv3 >}}
+
+{{< importPartial "footer/footer_openshiftv3.html" >}}
+
+{{% alert success %}}
+
+Special Thanks to Joel Adams!
+
+{{% /alert %}}
