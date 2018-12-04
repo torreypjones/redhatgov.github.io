@@ -1,0 +1,161 @@
+---
+title: "Exercise 4.0 - Creating an application using JBoss EAP builder image"
+workshops: openshiftv3
+workshop_weight: 10
+layout: lab
+---
+
+:domain_name: redhatgov.io
+:icons: font
+:imagesdir: /workshops/openshiftv3/images
+
+
+= Exercise 4.0 - Creating an application using JBoss EAP builder image
+
+== Section 1: Creating an application using JBoss EAP builder image
+
+In this exercise we will learn how to create an application using source code and the JBoss EAP builder image.
+
+=== Step 1: Create a project or use an existing project
+
+If you want to, you can create a new project based on what you have learned in previous labs. Or you can create a new project for JBoss Applications.
+
+====
+[NOTE]
+Remember to replace the username before running the command.
+====
+
+[source,bash]
+----
+oc new-project myjbossapp-{{< urifqdn_user "labuser""" >}} --display-name="My JBoss Applications" --description="A place for my JBoss EAP Applications"
+----
+
+=== Step 2: Create an application that uses the JBoss EAP builder image
+
+We will be using a sample application called *Kitchensink* (https://github.com/RedHatWorkshops/kitchensink). Taking that source-code; we will use the JBoss ImageStream (or the builder image) to assemble our application.
+
+Open the browser and select your new project *My JBoss Applications*.
+
+Click into *Browse Catalog* button.
+
+In the search text box type *EAP 6.4* and select *JBoss EAP 6.4 (no https)*.
+
+Click *Next*
+
+- In the Add to Project box select the created *"My JBoss Applications"* Project
+
+- Add to Project: select your project name if it is not show
+
+- Application Name: ks
+
+- Git Repository URL: https://github.com/RedHatWorkshops/kitchensink
+
+- Git Reference: master
+
+- Context Directory: /
+
+- Maven mirror URL: {{NEXUS_URL}}
+
+====
+[NOTE]
+REMEMBER: Check with your instructor the proper URL for the Nexus repository.
+====
+
+image::lab4-jboss_wizard_configuration.png['jboss_wizard_configuration', width=1024]
+
+image::lab4-jboss_wizard_configuration2.png['jboss_wizard_configuration2', width=1024]
+
+Click Next Select Create a secret in …​ to be used later Click on *Create* and then on *Continue to the project overview*.
+
+=== Step 3: Build
+
+Give it some seconds and you will see OpenShift starts the build process for you. You can view the list of builds using `oc get builds` command.
+
+[source,bash]
+----
+oc get builds
+----
+
+Note the name of the build that is running i.e. *ks-1*. We will use that name to look at the build logs. Run the command as shown below to look at the build logs. This will run for a few mins. At the end you will notice that the docker image is successfully created and it will start pushing this to OpenShift’s internal docker registry.
+
+[source,bash]
+----
+oc get pods
+----
+
+We can check the logs by executing the following command:
+
+[source,bash]
+----
+oc logs pod/ks-1-build
+----
+
+You will notice that in the logs that not only does it copy your source code to the builder image, but it also does a *maven* build to compile your code as well. Also, in the above log, note how the image is pushed to the local docker registry. The registry is running at *docker-registry.default.svc* at port *5000*.
+
+=== Step 4: Deployment
+
+Once the image is pushed to the docker registry, OpenShift will trigger a deploy process. Let us also quickly look at the deployment configuration by running the following command. Note *dc* represents *deploymentconfig*.
+
+[source,bash]
+----
+oc get dc ks -o json
+----
+
+====
+[NOTE]
+Note where the image is picked from. It shows that the deployment picks the image from the local registry (same ip address and port as in buildconfig) and the image tag is the same as what we built earlier. This means the deployment step deploys the application image what was built earlier during the build step.
+====
+
+If you get the list of pods, you’ll notice that the application gets deployed quickly and starts running in its own pod.
+
+[source,bash]
+----
+oc get pods
+----
+
+=== Step 5: Adding route
+
+This step is very much the same as what we did in previous exercises. We will check the service and add a route to expose that service.
+
+[source,bash]
+----
+oc get service ks
+----
+
+Route should be already created.
+
+[source,bash]
+----
+oc get routes
+----
+
+If route does not show, we expose the service *ks* via the command below.
+
+[source,bash]
+----
+oc expose service ks
+----
+
+And now we can check the route uri.
+
+=== Step 6: Run the application
+
+Now access the application by using the route you got in the previous step. You can use either curl or your browser.
+
+[source,bash]
+----
+curl ks-myjbossapp-{{< urifqdn_user "labuser""" >}}.apps.workshop.osecloud.com
+----
+
+====
+[NOTE]
+In this example, I am using a domain name of *apps.workshop.osecloud.com*. Ask the instructor for the domain name suffix for your setup an change it.
+====
+
+Go to https://ks-myjbossapp-{{< urifqdn_user "labuser""" >}}.workshop.osecloud.com via your browser. Please replace your username  and domain with yours.
+
+image::lab4-ks-myjbossapp.png['ks-myjbossapp', width=1024]
+
+Congratulations! In this exercise you have learned how to create, build and deploy a JBoss EAP application using OpenShift’s JBoss EAP Builder Image.
+
+{{< importPartial "footer/footer_openshiftv3.html" >}}
