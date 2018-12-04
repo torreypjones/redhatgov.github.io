@@ -28,188 +28,162 @@ In Part I of the Lab we will:
 
 [source,bash]
 ----
-oc new-project bluegreen-{{< urifqdn_user "labuser""" >}} --display-name="Blue Green Project" --description="Blue Green Project"
+oc new-project scm-web-hooks-{{< urifqdn_user "labuser""" >}} --display-name="Test WebHooks"
 ----
 
-=== Step 2: List existing image builder or image streams
+=== Step 2: Create new application
+
+We will use the forked repository from the previous lab.
+
+====
+[NOTE]
+Please replace your_github_username with the your github username in the commands below.
+====
 
 [source,bash]
 ----
-oc new-app -S --image-stream=php
+oc new-app --image-stream=php --code=https://github.com/your_github_username/bluegreen.git --name=scm-web-hooks
 ----
 
-=== Step 3: Create an application
+=== Step 3: Look at some of the created resources
 
-We will be using a sample application that displays a blue or green rectangle. The sample app can be browsed at https://github.com/RedHatWorkshops/bluegreen
-
-We will be using an env var in order to change the color of the box; but in practice you would use a different branch for each version of the code. (E.g. v1 branch and v2 branch)
+Build configuration
 
 [source,bash]
 ----
-oc new-app --image-stream=php --code=https://github.com/RedHatWorkshops/bluegreen --env COLOR=blue --name=blue
+oc get bc
 ----
 
-=== Step 4: Monitor the application build
+Deployment configuration
+
+[source,bash]
+----
+oc get dc
+----
+
+Show created service
+
+[source,bash]
+----
+oc get service
+----
+
+Show replication controller
+
+[source,bash]
+----
+oc get rc
+----
+
+Show route
+
+[source,bash]
+----
+oc get route
+----
+
+Notice that there is no route created yet for this application.
+
+Show the builds in progress (Running)
 
 [source,bash]
 ----
 oc get builds
 ----
 
-Using the build name of the recently created application run:
+Monitor the build
 
 [source,bash]
 ----
-oc logs build/blue-1
+oc logs build/scm-web-hooks-1
 ----
 
-Once the build finishes you should see something similar to:
+The build should finish similar to:
 
-=== Step 5: Check application deployment status
 
-[source,bash]
-----
-oc get pods
-----
 
-Notice that the build pod has exited and you now have a single instance of the application running under one single pod.
-
-This application displays a blue square.
-
-=== Step 6: List the service
+=== Step 4: Create a route
 
 [source,bash]
 ----
 oc get service
 ----
 
-=== Step 7: Create a route for the application
-
-Remember to substitute the username and FQDN. Expose the service:
-
-[source,bash]
-----
-oc expose service blue --hostname=bluegreen.{{< urifqdn_user "labuser""" >}}.apps.workshop.osecloud.com --name=bluegreen
-----
-
-=== Step 8: Test the application
+====
+[NOTE]
+In this example, I am using a domain name of *apps.workshop.osecloud.com*. Ask the instructor for the domain name suffix for your setup an change it.
+====
 
 [source,bash]
 ----
-oc get route
+oc expose service scm-web-hooks --hostname=scm-web-hooks.{{< urifqdn_user "labuser""" >}}.apps.workshop.osecloud.com
 ----
 
-Copy the HOST/PORT and paste it in your browser. You should see something similar to:
+=== Step 5: Test the application
 
-image::lab9-blue_deployment.jpeg['blue_deployment', width=1024]
+Use the newly created route, in the above case scm-web-hooks.{{< urifqdn_user "labuser""" >}}.apps.workshop.osecloud.com and paste it in your browser.
 
-At this point you have deployed an application that displays for illustration purposes a blue rectangle for version 1.
+You should see:
+
+image::lab10-green_deployment.png['green_deployment', width=1024]
 
 *Part II*
 
-In this part, we will:
+At this point you have an application with one single replica running inside a docker container in OpenShift. We used the source retrieved from the git repository and layered it using a builder or image stream strategy; in this particular case, the php image stream.
 
-- Deploy a new version of this application (Same one as before with a very small change)
-- Point the previously created FQDN (route) to the new service that will be created as part of the new application creation process.
+In this part of the Lab we will:
 
-image::lab9-blue_green_active_green.png['blue_green_active_green', width=1024]
+- Create a web hook for the recently deployed application.
+- Make a small change to the application.
+- Test to make sure the application was re-deployed.
 
-=== Step 1: Create new version of the application
+=== Step 1: Retrieve the OpenShift Web Hook URL
 
-Create a new application the same way as you did above in Part I. Make sure to name the application as `green' this time.
+- Navigate to the OpenShift Web console and login.
+- Select your *Test WebHooks* project, and click *Builds* and then *Builds*.
+- Click onto the build name from the list. You should have just one in this case.
+- Click *Configuration* tab to get list of *Triggers* for the GitHub link.
+- Copy the *GitHub webhook URL*. You will need this URL for next step.
 
-[source,bash]
-----
-oc new-app --image-stream=php --code=https://github.com/RedHatWorkshops/bluegreen --env COLOR=green --name=green
-----
+image::lab10-github_show_url.png['github_show_url', width=1024]
 
-Wait until the application is built and deployed. You should now see two services if you run:
+=== Step 2: Configure GitHub repository Web Hook
 
-[source,bash]
-----
-oc get service
-----
+- Login to your GitHub account.
+- Navigate to the forked repository you used to create the application.
+- Click on Settings.
+- Click on Webhooks.
+- Click on the Add webhook button.
+- Add the recently copied Web Hook URL from OpenShift.
+- Change the Content-type as ``application/json''
+- Click on the Disable SSL Verification button.
+- Confirm by adding the Add Webhook button in green at the bottom of the page.
 
-Edit the previously created route and change the service name (from `blue` to `green`), all the way at the bottom to the new service that was just created. You are essentially still using the FQDN you had previously created. However, that route will now point to a different (green) service.
+image::lab10-github_add_webhook.jpg['github_add_webhook', width=1024]
 
-[source,bash]
-----
-oc edit route bluegreen
-----
+=== Step 3: Redeploy the application
 
-[source,bash]
-----
-apiVersion: v1
-kind: Route
-metadata:
-  creationTimestamp: 2015-12-22T19:16:28Z
-  labels:
-    app: green
-  name: bluegreen
-  namespace: bluegreen-UserName
-  resourceVersion: "2969408"
-  selfLink: /oapi/v1/namespaces/bluegreen-{{< urifqdn_user "labuser""" >}}/routes/bluegreen
-  uid: 80829b59-a8e0-11e5-be21-fa163ec58dad
-spec:
-  host: bluegreen.UserName.apps.workshop.osecloud.com
-  port:
-    targetPort: "8080"
-  to:
-    kind: Service
-    name: green
-status: {}
-----
+- Edit in your GitHub account the image.php file.
+- One of the lines in line 9 or 10 should be commented out. Make a change so that the line that was previously commented out becomes active and pound the other one.
+- Commit the file.
 
-== Step 2: Test the application
+=== Step 4: Monitor new deployment process
+
+- After saving/committing the image.php file with the small change, you’ll notice in the OpenShift Web Console that a new build process has been automatically triggered. You didn’t have to start a build yourself.
+- Monitor the build process using:
 
 [source,bash]
 ----
-oc get route
+oc get builds
 ----
-
-- Copy the HOST/PORT and paste it in your browser.
-- You should now see the new version of the recently deployed application with a green rectangle.
-
-*Part III*
-
-You can route traffic to both services. This is also known as "cannary in a colemine".
-
-=== Step 1: *Edit Your Route* Using the lefthand side navigation; click on *Applications → Routes*. This will bring you to the *Route* overview page.
-
-image::lab9-bg-routes-page.png['bg-routes-page', width=1024]
-
-Here, click on the *bluegreen* route. The page after will display the current configuration. On the upper right hand side, click on *Actions → Edit*. You should see a page similar to this one.
-
-image::lab9-bg-edit-route.png['bg-edit-route', width=1024]
-
-Next, tick on `Split traffic across multiple services`
-
-Here, set the weight to 50% on blue and 50% on green. This will make it to where half the traffic will go to the green application and half to the blue application.
-
-image::lab9-bg-5050-split.png['bg-5050-split', width=1024]
-
-Once you click on *Save*; you should see this on the Route Overview page.
-
-=== Step 2: Test Your Settings
-
-If you try and visit your application; you’ll notice it won’t "switch" over to the other application. This is because the default behavior is:
-
-- Sticky Session on the Router
-- Session Cookie set on the router
-
-To get "true" round robin; annotate your route with the following
 
 [source,bash]
 ----
-oc annotate route/bluegreen haproxy.router.openshift.io/balance=roundrobin
-oc annotate route/bluegreen haproxy.router.openshift.io/disable_cookies=true
+oc logs build/the-new-build-process-name
 ----
 
-Summary
+*Summary*
 
-- Blue-Green deployments can be easily accomplished in OpenShift v3.
-- We have shown multiple versions of an application; all running concurrently, each with a unique service.
-- All that is needed to expose any of the applications is to change the service being used by the route to publicly advertise the application.
-- You can split traffic accross two services
+We have shown in this Lab how simple it is to configure automatic deployments of applications using OpenShift and GitHub Web Hook triggers. It should be noted that OpenShift also supports Generic Web Hooks.
 
 {{< importPartial "footer/footer_openshift_v3_azure.html" >}}
