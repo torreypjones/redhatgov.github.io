@@ -1,0 +1,54 @@
+---
+title: "Exercise 2.5 - Using Custom S2I Image to deploy a SpringBoot Application"
+workshops: openshift_v3_azure
+workshop_weight: 10
+layout: lab
+---
+
+:domain_name: redhatgov.io
+:icons: font
+:imagesdir: /workshops/openshift_v3_azure/images
+
+
+= Exercise 2.5 - Using Custom S2I Image to deploy a SpringBoot Application
+
+== Section 1: Using Custom S2I Image to deploy a SpringBoot Application
+
+In this exercise we will deploy a SpringBoot application using a custom source to image builder image. You will learn how to use an s2i image that is not on openshift to build your application.
+
+=== Step 1: Using the knowledge you gained from the earlier labs create a new project with name `spring-{{< urifqdn_user "labuser""" >}}`
+
+=== Step 2: Create a new application using SpringBoot S2I Builder image. Here we will deploy sample code from a git repository https://github.com/RedHatWorkshops/spring-sample-app. Please take time to understand the code; it is pretty simple.
+
+You may want to clone this into your git repository and deploy that, if you want to make changes and test.
+
+Note: We are using an S2I builder image from docker directly. This S2I builder image was created using this Dockerfile. https://github.com/codecentric/springboot-maven3-centos/blob/master/Dockerfile
+
+[source,bash]
+----
+oc new-app veermuchandi/spring-mvn-base~https://github.com/RedHatWorkshops/spring-sample-app --name=bootapp
+----
+
+Expose Service to create a route
+
+[source,bash]
+----
+oc expose service bootapp
+----
+
+Check the route
+
+[source,bash]
+----
+oc get route
+----
+
+Wait for your application to be built and deployed. Using the knowlege you gained from the previous labs, check your build logs by running `oc logs -f <build pod name>`
+
+=== Step 3: Requesting Storage
+
+Test your application by using the hostname assigned in the route.
+
+Congratulations!! You are now running a SpringBoot application on OpenShift.
+
+{{< importPartial "footer/footer_openshift_v3_azure.html" >}}
