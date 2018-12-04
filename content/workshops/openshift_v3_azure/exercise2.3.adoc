@@ -1,0 +1,123 @@
+---
+title: "Exercise 2.3 - Code Promotion across Environments"
+workshops: openshift_v3_azure
+workshop_weight: 10
+layout: lab
+---
+
+:domain_name: redhatgov.io
+:icons: font
+:imagesdir: /workshops/openshift_v3_azure/images
+
+
+= Exercise 2.3 - Code Promotion across Environments
+
+== Section 1: Code Promotion across Environments
+
+In this lab we will learn how an application image binary can be promoted across the environments. As an example we will use development and QA environments as promotion to pre-prod and production will be very similar.
+
+In this example we are using projects as means of separation of environments (development, qa, production).
+
+=== Step 1: Create two projects
+
+Using the knowledge you gained from the past create two projects.
+
+Name the first project *development-{{< urifqdn_user "labuser""" >}}*
+
+[source,bash]
+----
+oc new-project development-{{< urifqdn_user "labuser""" >}}
+----
+
+Name the second *testing-{{< urifqdn_user "labuser""" >}}*
+
+[source,bash]
+----
+oc new-project testing-{{< urifqdn_user "labuser""" >}}
+----
+
+=== Step 2: Provide ImagePuller Access to the QA Project from Development Project
+
+The following command will allow the QA project to be able to pull the docker images from the Development project.
+
+[source,bash]
+----
+oc policy add-role-to-group system:image-puller system:serviceaccounts:testing-{{< urifqdn_user "labuser""" >}} -n development-{{< urifqdn_user "labuser""" >}}
+----
+
+=== Step 3: Create an application in the development project
+
+Switch over to the *development-{{< urifqdn_user "labuser""" >}}* project and deploy an application using the php s2i builder. You can use webconsole or command line. The command line option is shown below.
+
+*Bonus points*: Clone this application to your own github account and deploy it so that you can redeploy with changes later.
+
+[source,bash]
+----
+oc project development-{{< urifqdn_user "labuser""" >}}
+oc new-app openshift/php~https://github.com/RedHatWorkshops/welcome-php
+----
+
+=== Step 4: Tag the docker image
+
+Wait until the application gets built and deployed. Now if you check the imagestreams you will find the docker image for this application.
+
+Now find the imagestream name using the following command. `is` is the short form for `imageStream`.
+
+[source,bash]
+----
+oc get is
+----
+
+Now describe this image stream to get the full image id:
+
+[source,bash]
+----
+oc describe is welcome-php
+----
+
+In this case, the full image Id is
+
+docker-registry.default.svc:5000/development-{{< urifqdn_user "labuser""" >}}/welcome-php@sha256:157334d73dfc8dfdf733257b05c3fecaee236d36f69afa207395715fbe882abf
+
+Now let us assume that this docker image is good and is ready to promote to QA. Let us tag this docker image using the `oc tag` command.
+
+The format is
+
+[source,bash]
+----
+oc tag *FullImageId* development-{{< urifqdn_user "labuser""" >}}/myapp:promote-qa
+----
+
+Check the following commands and replace the values where needed:
+
+[source,bash]
+----
+oc tag \
+docker-registry.default.svc:5000/development-{{< urifqdn_user "labuser""" >}}/welcome-php@sha256:157334d73dfc8dfdf733257b05c3fecaee236d36f69afa207395715fbe882abf \
+development-{{< urifqdn_user "labuser""" >}}/welcome-php:promote-qa
+----
+
+[source,bash]
+----
+oc describe is welcome-php
+----
+
+=== Step 5: Deploy the application to QA
+
+Now you can switch over to the QA project and deploy the docker image that we tagged in development. Also expose service to create route for this project and remember to substitute username.
+[source,bash]
+----
+oc project testing-{{< urifqdn_user "labuser""" >}}
+oc new-app development-{{< urifqdn_user "labuser""" >}}/welcome-php:promote-qa
+oc expose service welcome-php
+----
+
+Test this application in the QA project. Note that we deployed the docker image from the development project without rebuilding the code.
+
+Bonus points: Make changes to your git repo (to `index.php`) and deploy it to development first. Notice that your changes are seen only in development project. Repeat the changes a couple of times. Now find the latest imagestream and tag it as promote-qa. Watch out that the QA project gets redeployed when you update the new tag.
+
+Watch this https://blog.openshift.com/promoting-applications-across-environments for complete understandting.
+
+Congratulations!! you now know how to promote your application across environments in OpenShift 3.
+
+{{< importPartial "footer/footer_openshift_v3_azure.html" >}}
