@@ -1,16 +1,16 @@
 ---
-title: "Exercise 6.0 - Scale up and Scale down and Idle the application instances"
-workshops: openshiftv3
+title: "Exercise 1.6 - Scale up and Scale down and Idle the application instances"
+workshops: openshift_v3_azure
 workshop_weight: 10
 layout: lab
 ---
 
 :domain_name: redhatgov.io
 :icons: font
-:imagesdir: /workshops/openshiftv3/images
+:imagesdir: /workshops/openshift_v3_azure/images
 
 
-= Exercise 6.0 - Scale up and Scale down and Idle the application instances
+= Exercise 1.6 - Scale up and Scale down and Idle the application instances
 
 == Section 1: Scale up and Scale down and Idle the application instances
 
@@ -141,4 +141,4 @@ Alternately, you can go to project overview page and click on down arrow twice t
 Congratulations!! In this exercise you have learned about scaling and how to scale up/down your application on OpenShift!
 
 
-{{< importPartial "footer/footer_openshiftv3.html" >}}
+{{< importPartial "footer/footer_openshift_v3_azure.html" >}}

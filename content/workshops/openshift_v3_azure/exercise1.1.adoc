@@ -1,16 +1,16 @@
 ---
-title: "Exercise 1.0 - Create App From Docker Image"
-workshops: openshiftv3
+title: "Exercise 1.1 - Create App From Docker Image"
+workshops: openshift_v3_azure
 workshop_weight: 10
 layout: lab
 ---
 
 :domain_name: redhatgov.io
 :icons: font
-:imagesdir: /workshops/openshiftv3/images
+:imagesdir: /workshops/openshift_v3_azure/images
 
 
-= Exercise 1.0 - Running Ad Hoc Commands
+= Exercise 1.1 - Running Ad Hoc Commands
 
 
 == Section 1: Add a new project from command line
@@ -134,4 +134,4 @@ You can run `oc get all` again to make sure the project is empty.
 Congratulations!! You now know how to create a project, an application using an external docker image and navigate around. Get ready for more fun stuff!
 
 
-{{< importPartial "footer/footer_openshiftv3.html" >}}
+{{< importPartial "footer/footer_openshift_v3_azure.html" >}}

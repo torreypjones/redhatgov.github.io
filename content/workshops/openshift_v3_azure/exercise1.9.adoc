@@ -1,16 +1,16 @@
 ---
-title: "Exercise 9.0 - Blue-Green Deployments"
-workshops: openshiftv3
+title: "Exercise 1.9 - Blue-Green Deployments"
+workshops: openshift_v3_azure
 workshop_weight: 10
 layout: lab
 ---
 
 :domain_name: redhatgov.io
 :icons: font
-:imagesdir: /workshops/openshiftv3/images
+:imagesdir: /workshops/openshift_v3_azure/images
 
 
-= Exercise 9.0 - Blue-Green Deployments
+= Exercise 1.9 - Blue-Green Deployments
 
 == Section 1: Blue-Green Deployments
 
@@ -220,4 +220,4 @@ Summary
 - All that is needed to expose any of the applications is to change the service being used by the route to publicly advertise the application.
 - You can split traffic accross two services
 
-{{< importPartial "footer/footer_openshiftv3.html" >}}
+{{< importPartial "footer/footer_openshift_v3_azure.html" >}}

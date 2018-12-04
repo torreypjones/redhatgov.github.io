@@ -1,16 +1,16 @@
 ---
-title: "Exercise 7.0 - Binary Deployment of a war file"
-workshops: openshiftv3
+title: "Exercise 1.7 - Binary Deployment of a war file"
+workshops: openshift_v3_azure
 workshop_weight: 10
 layout: lab
 ---
 
 :domain_name: redhatgov.io
 :icons: font
-:imagesdir: /workshops/openshiftv3/images
+:imagesdir: /workshops/openshift_v3_azure/images
 
 
-= Exercise 7.0 - Binary Deployment of a war file
+= Exercise 1.7 - Binary Deployment of a war file
 
 == Section 1: Binary Deployment of a war file
 
@@ -105,4 +105,4 @@ oc expose svc myapp
 
 You can use the route to access the application using the URL.
 
-{{< importPartial "footer/footer_openshiftv3.html" >}}
+{{< importPartial "footer/footer_openshift_v3_azure.html" >}}

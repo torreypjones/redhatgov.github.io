@@ -1,6 +1,6 @@
 ---
 title: "Setup"
-workshops: openshiftv3
+workshops: openshift_v3_azure
 workshop_weight: 1
 layout: lab
 ---
@@ -8,7 +8,7 @@ layout: lab
 :badges:
 :icons: font
 :iconsdir: http://people.redhat.com/~jduncan/images/icons
-:imagesdir: /workshops/openshiftv3/images
+:imagesdir: /workshops/openshift_v3_azure/images
 :source-highlighter: highlight.js
 :source-language: yaml
 
@@ -62,4 +62,4 @@ Be sure you can log in to your instances.  If you can't log in start shouting, l
 
 At this point, you should have logged into your node.  If you haven't, let us know so we can get you fixed up.
 
-{{< importPartial "footer/footer_openshiftv3.html" >}}
+{{< importPartial "footer/footer_openshift_v3_azure.html" >}}

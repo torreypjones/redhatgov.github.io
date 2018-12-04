@@ -1,16 +1,16 @@
 ---
-title: "Exercise 5.0 - Using Templates"
-workshops: openshiftv3
+title: "Exercise 1.5 - Using Templates"
+workshops: openshift_v3_azure
 workshop_weight: 10
 layout: lab
 ---
 
 :domain_name: redhatgov.io
 :icons: font
-:imagesdir: /workshops/openshiftv3/images
+:imagesdir: /workshops/openshift_v3_azure/images
 
 
-= Exercise 5.0 - Using Templates
+= Exercise 1.5 - Using Templates
 
 == Section 1: Using Templates
 
@@ -170,4 +170,4 @@ SELECT * FROM products;
 
 In this lab exercise you have seen a complete web application deployed using OpenShift templates in two parts. First we deployed the MySQL database. We added data manually by getting into the pod. Then we added the frontend code that was built using the OpenShift S2I process. You configured this frontend application to access the database using a service, in this case, the ``mysql'' service. The frontend is made accessible using a route for which you gave a URL.
 
-{{< importPartial "footer/footer_openshiftv3.html" >}}
+{{< importPartial "footer/footer_openshift_v3_azure.html" >}}

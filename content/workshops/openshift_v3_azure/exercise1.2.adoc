@@ -1,16 +1,16 @@
 ---
-title: "Exercise 2.0 - Create an App using Docker build"
-workshops: openshiftv3
+title: "Exercise 1.2 - Create an App using Docker build"
+workshops: openshift_v3_azure
 workshop_weight: 10
 layout: lab
 ---
 
 :domain_name: redhatgov.io
 :icons: font
-:imagesdir: /workshops/openshiftv3/images
+:imagesdir: /workshops/openshift_v3_azure/images
 
 
-= Exercise 2.0 - Running Ad Hoc Commands
+= Exercise 1.2 - Running Ad Hoc Commands
 
 == Section 1: Create an App using Docker build
 
@@ -139,4 +139,4 @@ In this example, I am using a domain name of *apps.workshop.osecloud.com*. Ask t
 
 Congratulations!! In this exercise you have learnt how to create, build and deploy an application using OpenShift’s *Docker Build strategy*.
 
-{{< importPartial "footer/footer_openshiftv3.html" >}}
+{{< importPartial "footer/footer_openshift_v3_azure.html" >}}
