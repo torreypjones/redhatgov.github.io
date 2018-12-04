@@ -1,0 +1,137 @@
+---
+title: "Exercise 1.0 - Create App From Docker Image"
+workshops: openshiftv3
+workshop_weight: 10
+layout: lab
+---
+
+:domain_name: redhatgov.io
+:icons: font
+:imagesdir: /workshops/openshiftv3/images
+
+
+= Exercise 1.0 - Running Ad Hoc Commands
+
+
+== Section 1: Add a new project from command line
+
+In this lab you will learn how to create a new project on OpenShift and how to create an application from an existing docker image.
+
+=== Step 1: Add a new project from command line
+
+====
+[NOTE]
+Please replace UserName with the username assigned to you in the commands below.
+====
+
+[source,bash]
+----
+oc new-project mycliproject-labuser{{< urifqdn_user "" >}} --description="My CLI Project" --display-name="CLI Project"
+----
+
+Upon project creation, OpenShift will automatically switch to the newly created project/namespace. If you wish to view the list of projects, run the following command
+
+[source,bash]
+----
+oc get projects
+----
+
+
+
+If you have more than one project, you can switch to a different one by issuing `oc project <project name>`. Although you don’t want to do it now.
+
+You can also check the status of the project by running the following command. It says that the project is currently not running anything.
+
+[source,bash]
+----
+oc status
+----
+
+=== Step 2: Create an application from a Docker Image
+
+
+
+Next we will create an application inside the above project using an existing docker image. We will be using a very simple docker image on dockerhub that just says 'Welcome to OpenShift V3. Let us just use that for this exercise.
+
+First create a new application using the docker image using the `oc new-app` command as shown below
+
+[source,bash]
+----
+oc new-app redhatworkshops/welcome-php --name=welcome
+----
+
+The above command uses the docker image to deploy a docker container in a pod. If you quickly run `oc get pods` you will notice that a deployer pod runs and it starts an application pod as shown below.
+
+[source,bash]
+----
+oc get pods
+----
+
+In the above example *welcome-1-deploy* is the deployer pod and the other one is the actual application pod. In a little while the deployer pod will succeed and the application pod will change for *Pending* to *Running* status.
+
+[source,bash]
+----
+oc get pods
+----
+
+=== Step 3: Add a Route for your application
+
+OpenShift also spins up a service for this application. Run the following command to view the list of services in the project (you can also use `oc get svc` shorthand).
+
+[source,bash]
+----
+oc get services
+----
+
+You will notice the *welcome* service was created for this project.
+
+However, there is no route for this application yet. So you cannot access this application from outside.
+
+Now add a route to the service with the following command. `oc expose` command will allow you to expose your service to the world so that you can access it from the browser.
+
+====
+[NOTE]
+In this example, I am using a domain name of *apps.workshop.osecloud.com*. Ask the instructor for the domain name suffix for your setup an change it.
+====
+
+[source,bash]
+----
+oc expose service welcome --name=welcome
+----
+
+=== Step 4: Try your application
+
+Access the application: Now access the application using curl (looking for 200 status code) or from the browser and see the result
+
+[source,bash]
+----
+oc get routes
+curl -Is <route>
+----
+
+Voila!! you created your first application using an existing docker image on OpenShift.
+
+=== Step 5: Clean up
+
+Run the `oc get all` command to view all the components that were created in your project.
+
+[source,bash]
+----
+oc get all
+----
+
+Now you can delete all these components by running one command.
+
+[source,bash]
+----
+oc delete all --all
+----
+
+You will notice that it has deleted the imagestream for the application, the deploymentconfig, the service and the route.
+
+You can run `oc get all` again to make sure the project is empty.
+
+Congratulations!! You now know how to create a project, an application using an external docker image and navigate around. Get ready for more fun stuff!
+
+
+{{< importPartial "footer/footer_openshiftv3.html" >}}

@@ -40,6 +40,19 @@ After logging in, you should see a shell.
 
 image::wetty.png[caption="Figure 1: ", title='wetty', width=1024]
 
+== Accessing Openshift
+
+Use this command to access the OpenShift CLI interface. Notice you are logging into the load balancer FQDN for the master nodes. Just change the workshopname and region (if applicable). Ask your instructor for the workshopname and region.
+
+[source,bash]
+----
+{{< urifqdn_openshift "oc login"" ">}}
+----
+
+----
+login: {{< urifqdn_user "labuser""" >}}
+Password: SNX2018
+----
 
 [IMPORTANT]
 Be sure you can log in to your instances.  If you can't log in start shouting, loudly, and waving your hands!
