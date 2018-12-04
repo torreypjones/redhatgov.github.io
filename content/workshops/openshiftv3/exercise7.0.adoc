@@ -1,0 +1,108 @@
+---
+title: "Exercise 7.0 - Binary Deployment of a war file"
+workshops: openshiftv3
+workshop_weight: 10
+layout: lab
+---
+
+:domain_name: redhatgov.io
+:icons: font
+:imagesdir: /workshops/openshiftv3/images
+
+
+= Exercise 7.0 - Binary Deployment of a war file
+
+== Section 1: Binary Deployment of a war file
+
+In the past you have seen how OpenShift can take your existing java code, build it and deploy the resultant docker image as an application. OpenShift S2I process includes an assemble script that copies the source code from a git repository, invokes a maven build, places the resultant war file in the deployments folder, builds a new application image and pushes that image into the registry.
+
+But how about if you want OpenShift to deploy a war file that you built yourself?
+
+In this exercise you will learn to deploy a war file. We will assume that you built your source code outside of OpenShift build process and want to download the WAR file on your workstation.
+
+=== Step 1: Create project & folder structure
+
+[source,bash]
+----
+oc new-project binarydeploy-{{< urifqdn_user "labuser""" >}}
+mkdir binarytest && cd binarytest
+mkdir deployments
+----
+
+FYI:
+
+You can also create a modules directory at the same level as ``deployments'' above and have additional modules there or configuration files. For example:
+
+[source,bash]
+----
+mkdir modules
+cd modules
+mkdir cfg
+cd cfg
+touch config-1.cfg config-2.cfg
+----
+
+Create a war file and place it in deployments directory.
+
+As an example here we have a WAR file called `petstore.war` that we renamed to `ROOT.war` and placed in the deployments folder (you can download this example WAR file https://raw.githubusercontent.com/RedHatWorkshops/ps/master/deployments/ROOT.war).
+
+[source,bash]
+----
+ls -lR
+----
+
+[source,bash]
+----
+./deployments:
+----
+
+=== Step 2: Using builder image
+
+Create a new build using the builder image of your choice. Here we are using JBoss EWS (tomcat 8) image. The flag 'binary=true' indicates that this build will use the binary content instead of the url to the source code.
+
+Here I am naming my application as *myapp*. So all the artifacts will get the name *myapp*.
+
+[source,bash]
+----
+oc new-build --image-stream=jboss-webserver30-tomcat8-openshift:1.3 --binary=true --name=myapp
+----
+
+
+=== Step 3: Executing the build
+
+Start the build by uploading the contents of your *deployments* directory. Make sure you are in the parent folder where you created the *deployments* folder inside previously. Remember the war file is in the *deployments* folder. The jboss-ews builder image knows to copy the contents of the *deployments* folder to the *deployments* directory and then builds the application image.
+
+[source,bash]
+----
+oc start-build myapp --from-dir=.
+----
+
+You can check the build logs by executing:
+
+[source,bash]
+----
+oc logs myapp-1-build
+----
+
+=== Step 4: Create the application
+
+Now create the application with the same name as what you gave for the build.
+
+Here we are using the name *myapp*, so that the rest of the objects such as deployment configuration and service are created with the same name and refer to the image-stream created earlier.
+
+
+[source,bash]
+----
+oc new-app myapp --allow-missing-imagestream-tags
+----
+
+Now, expose the service as a route to be able to use it from the browser.
+
+[source,bash]
+----
+oc expose svc myapp
+----
+
+You can use the route to access the application using the URL.
+
+{{< importPartial "footer/footer_openshiftv3.html" >}}
