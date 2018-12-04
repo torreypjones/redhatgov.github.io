@@ -1,0 +1,228 @@
+---
+title: "Exercise 2.4 - Using Persistent Storage"
+workshops: openshift_v3_azure
+workshop_weight: 10
+layout: lab
+---
+
+:domain_name: redhatgov.io
+:icons: font
+:imagesdir: /workshops/openshift_v3_azure/images
+
+
+= Exercise 2.4 - Using Persistent Storage
+
+== Section 1: Using Persistent Storage
+
+The purpose of this lab is to demonstrate how you can request storage from OpenShift and have it attach to your application.
+
+Containers, by design, are ephemeral. In short, if you want your application to store persistent data; you will need to attach to a backend storage system.
+
+In this Lab, we will be:
+
+- Deploying an application that takes uploads
+- Upload a File, and delete the pod
+- Attach persistant storage
+- Upload a File, and delete the pod
+
+*NOTE*: Storage provisioning must be setup by the Operations Team before proceeding.
+
+
+=== Step 1: Deploy Application
+
+Create a project called storage-{{< urifqdn_user "labuser""" >}} and deploy the application
+
+[source,bash]
+----
+oc new-project storage-{{< urifqdn_user "labuser""" >}} --description="My Storage-project" --display-name="Storage Project"
+oc new-app php~https://github.com/RedHatWorkshops/openshift-php-upload-demo
+----
+
+Once the application is deployed expose the route
+
+[source,bash]
+----
+oc get svc
+----
+
+[source,bash]
+----
+oc expose svc openshift-php-upload-demo
+----
+
+Visit your application; it should look like this
+
+image::lab13-upload-app.png['upload-app', width=1024]
+
+=== Step 2: Test with ephemeral storage
+
+Pick a file to upload and upload it to the app. Once uploaded you can view a list of file when you click *List Uploaded Files*. It should look something like this
+
+image::lab13-list-uploaded-files.png['list-uploaded-files', width=1024]
+
+You can see where the uploaded files are if you use `oc rsh`. They are uploaded under ``/opt/app-root/src/uploaded`
+
+[source,bash]
+----
+oc get pods
+----
+
+[source,bash]
+----
+oc rsh openshift-php-upload-demo-1-rdktr
+----
+
+[source,bash]
+----
+ls -1 /opt/app-root/src/uploaded
+----
+
+[source,bash]
+----
+exit
+----
+
+Delete this pod.
+
+[source,bash]
+----
+oc delete pod openshift-php-upload-demo-1-rdktr
+----
+
+Now login to your new pod that got spun up. Your data is gone!
+
+[source,bash]
+----
+oc get pods
+----
+
+[source,bash]
+----
+oc rsh openshift-php-upload-demo-1-wnv4r
+----
+
+[source,bash]
+----
+ls -1 /opt/app-root/src/uploaded
+----
+
+[source,bash]
+----
+exit
+----
+
+=== Step 3: Requesting Storage
+
+In OpenShift, Storage is abstracted out to where one simply "requests" storage and it’s up to the backend adminsitrator to provide the solution
+
+On the webconsole on the left side navigation click on "*Storage*". It will bing you to the storage overview page.
+
+image::lab13-storage-overview.png['storage-overview', width=1024]
+
+On the right hand side; click the "*Create Storage*" button. This will take you to the "*Create Storage*" page.
+
+image::lab13-create-storage.png['create-storage', width=1024]
+
+Here you need to enter the following
+
+- Storage Class: <provided by your instructor>
+- Name: myclaim
+- Access Mode: Shared Access (RWX)
+- Size: 1 GiB
+
+The *Storage Class* will be given to you by your instructor. The *Name* must be unique to the project namespace. The *Access Mode* means "how many apps can access this storage". For block storage you’d choose *Singe User (RWO)*; in this instance we are choosing *Shared Access (RWX)* (for File based storage like NFS). The Size is set to *1 GB* just for testing.
+
+Once you click on "Create" it’ll go from a *Pending* stage to *Bound*. You can see this on the command-line as well by checking your `pvc` (Which stands for Persistant Volume Claim)
+
+[source,bash]
+----
+oc get pvc
+----
+
+Get yourself familair with the configuration
+
+[source,bash]
+----
+oc get pvc myclaim -o yaml
+----
+
+We will now bind this storage to the application’s path of where it is storing the files. This is under ``/opt/app-root/src/uploaded`. You need to add the volume to the `deploymentConfig` of `openshift-php-upload-demo`.
+
+[source,bash]
+----
+oc volume dc/openshift-php-upload-demo  --add -t pvc --claim-name=myclaim --mount-path=/opt/app-root/src/uploaded
+----
+
+=== Step 4: Testing Configuration
+
+This will trigger a new deployment. Login to your pod to see the mount.
+
+[source,bash]
+----
+oc get pods
+----
+
+[source,bash]
+----
+oc rsh openshift-php-upload-demo-8-16dzg
+----
+
+[source,bash]
+----
+df -h /opt/app-root/src/uploaded/
+----
+
+[source,bash]
+----
+exit
+----
+
+Upload a file like before.
+
+Visit your application; it should look like this
+
+image::lab13-upload-app.png['upload-app', width=1024]
+
+Pick a file to upload and upload it to the app. Once uploaded you can view a list of file when you click *List Uploaded Files*. It should look something like this
+
+image::lab13-list-uploaded-files.png['list-uploaded-files', width=1024]
+
+Once uploaded; delete the pod
+
+[source,bash]
+----
+oc get pods
+----
+
+[source,bash]
+----
+oc delete pod openshift-php-upload-demo-8-16dzg
+----
+
+Log into the newly spunup pod and verify that your file is still there!
+
+[source,bash]
+----
+oc get pods
+----
+
+[source,bash]
+----
+oc rsh openshift-php-upload-demo-8-4brh0
+----
+
+[source,bash]
+----
+ls -1 /opt/app-root/src/uploaded
+----
+
+[source,bash]
+----
+exit
+----
+
+*Summary*
+
+In this lab you learned how to request, attach, and test persistant storage.
+
+{{< importPartial "footer/footer_openshift_v3_azure.html" >}}
