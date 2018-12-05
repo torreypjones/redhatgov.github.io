@@ -88,6 +88,11 @@ In this example, I am using a domain name of *apps.workshop.osecloud.com*. Ask t
 
 Verify by visiting your page by using the *https://* URI
 
+====
+[NOTE]
+The system may ask you to accept access to an unsecure host
+====
+
 Congratulations!! In this exercise you have learned about service SSL from your application
 
 {{< importPartial "footer/footer_openshift_v3_azure.html" >}}
