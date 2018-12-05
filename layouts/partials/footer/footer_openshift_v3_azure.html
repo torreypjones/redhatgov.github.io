@@ -40,34 +40,28 @@ function loadVariables() {
     var region=getCookie("region");
 
     if (userid != "") {
-      document.getElementById("userid").value = userid;
+        document.getElementById("userid").value = userid;
     }
     if (bastion != "") {
-      document.getElementById("bastion").value = bastion;
+        document.getElementById("bastion").value = bastion;
     } else {
-      document.getElementById("bastion").value = "example";
+        document.getElementById("bastion").value = "example";
     }
     if (openshift != "") {
-      document.getElementById("openshift").value = openshift;
+        document.getElementById("openshift").value = openshift;
     } else {
-      document.getElementById("openshift").value = "example";
+        document.getElementById("openshift").value = "example";
     }
     if (region != "") {
-      document.getElementById("region").value = region;
+        document.getElementById("region").value = region;
     } else {
-      document.getElementById("region").value = "example";
+        document.getElementById("region").value = "example";
     }
-    if (openshiftdomain != "") {
-      document.getElementById("openshiftdomain").value = openshiftdomain;
-        replaceclasstext("domain",domain)
-        replaceclasstext("openshift",openshift)
-        replaceclasstext("userid",userid)
-        replaceclasstext("region",region)
-    }
-    if (bastiondomain != "") {
-      document.getElementById("bastiondomain").value = bastiondomain;
+    if (domain != "") {
+      document.getElementById("domain").value = domain;
         replaceclasstext("domain",domain)
         replaceclasstext("bastion",bastion)
+        replaceclasstext("openshift",openshift)
         replaceclasstext("userid",userid)
         replaceclasstext("region",region)
     }
@@ -91,8 +85,7 @@ function defaultVariables() {
     var bastion = document.getElementById("bastion").value;
     var domain = document.getElementById("domain").value;
     var region = document.getElementById("region").value;
-    var openshiftfqdn = openshift + "." + region + "." + domain;
-    var bastionfqdn = bastion + "." + region + "." + domain;
+    var fqdn = openshift + "." + region + "." + domain;
 
     replaceclasstext("domain",domain)
     replaceclasstext("openshift",openshift)
