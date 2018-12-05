@@ -24,6 +24,7 @@ Using the *Create Project* button, create a new project. We will call it *consol
 
 Press the *Create* button to complete the project creation from the Web Console. This will accomplish the same job as `oc new-project` from CLI.
 
+Select the project from the list of *My Projects*
 
 === Step 2: Create a MYSQL database using the template
 
@@ -37,7 +38,6 @@ image::lab5-mysql_ephemeral_template.png['mysql_ephemeral_template', width=1024]
 
 You will be taken to the mysql ephemeral creation screen. Click *Next* parameters and edit the values to use the following values:
 
-- Add to Project: consoleproject-{{< urifqdn_user "labuser""" >}}
 - Database Service Name: mysql
 - MySQL Connection Username: pricelist
 - MySQL Connection Password: pricelist
@@ -66,6 +66,7 @@ While we are waiting we can add a lable to the mysql deployment Run the followin
 
 [source,bash]
 ----
+oc project consoleproject-{{< urifqdn_user "labuser""" >}}
 oc label dc mysql app=pricelist
 ----
 
@@ -77,21 +78,27 @@ https://github.com/RedHatWorkshops/php-pricelist
 
 Browse through the code in this repository. If you take a look at the *database configuration* file (config/database.php) you will see that it reads the values from environment varables.
 
-To add a frontend again click on *Add to Project → Browse Catalog* This will take you to the Service Catalog. Select Languages → PHP → PHP
+To add a frontend through the web console click on *Add to Project → Browse Catalog* This will take you to the Service Catalog. Select Languages → PHP → PHP
 
-Click *Next*
+Click *Next* parameters and edit the values to use the following values:
 
-Add to Project: consoleproject-UserName (this should be the same project as MySQL Ephemeral) Application Name: pricelist Git Repository: https://github.com/RedHatWorkshops/php-pricelist
-
-image::lab5-php.png['php', width=1024]
+- Application Name: pricelist
+- Git Repository: https://github.com/RedHatWorkshops/php-pricelist
 
 Click onto the link *Advanced Options* Go to Deployment Configuration section and enter the following environment variables:
 
-image::lab5-dbtest_deployment_env.png['dbtest_deployment_env', width=1024]
+  Name               Value
+  MYSQL_USER         pricelist
+  MYSQL_PASSWORD     pricelist
+  MYSQL_DATABASE     pricelist
 
 In the Labels section add the following label if its not there:
 
 `* app=pricelist`
+
+image::lab5-php.png['php', width=1024]
+
+image::lab5-dbtest_deployment_env.png['dbtest_deployment_env', width=1024]
 
 Click *Create* to add this frontend application to talk to the database.
 
@@ -99,7 +106,7 @@ image::lab5-cakephp_confirm.png['cakephp_confirm', width=1024]
 
 Click *Continue to product overview*.
 
-You will be taken back to the Project Overview page and you will start seeing that a new service is now available and exposed as a route. Since you labeled both frontend web and backend db as `app=pricelist` it will show as one application
+You will be taken back to the Project Overview page and you will start seeing that a new service is now available and exposed as a route. Since you labeled both frontend web and backend db as *app=pricelist* it will show as one application
 
 You will also notice that a build starts running very soon. Once the build completes, the application image created from the source code will be uploaded to the docker repository.
 
@@ -118,13 +125,10 @@ Now use `curl` to run the database `bootstrap` script
 
 [source,bash]
 ----
-oc project
-----
-
-[source,bash]
-----
 curl -k http://$(oc get route/pricelist -o jsonpath='{.spec.host}')/create_database.php
 ----
+
+image::lab5-curl_output.png['curl_output', width=1024]
 
 Go ahead and open your application. The URL will be displayed by `oc get route`
 
@@ -148,8 +152,10 @@ Here you’ll notice that the database pod is called `mysql-1-rxnlp`. Login to t
 
 [source,bash]
 ----
-oc rsh mysql-1-rxnlp
+oc rsh mysql-1-9v7r5
 ----
+
+image::lab5-oc_rsh.png['oc_rsh', width=1024]
 
 Run 'mysql -u root pricelist' to login and run the query.
 
@@ -163,9 +169,12 @@ mysql -u root pricelist
 SELECT * FROM products;
 ----
 
+image::lab5-sql_select.png['sql_select', width=1024]
+
 [source,bash]
 ----
 \q
+exit
 ----
 
 In this lab exercise you have seen a complete web application deployed using OpenShift templates in two parts. First we deployed the MySQL database. We added data manually by getting into the pod. Then we added the frontend code that was built using the OpenShift S2I process. You configured this frontend application to access the database using a service, in this case, the ``mysql'' service. The frontend is made accessible using a route for which you gave a URL.

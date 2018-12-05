@@ -27,11 +27,11 @@ oc project mycliproject-{{< urifqdn_user "labuser""" >}}
 
 === Step 2: View the deployment config
 
-Take a look at the `deploymentConfig` (or `dc`) of the `time` application
+Take a look at the `deploymentConfig` (or `dc`) of the `myhttpdapp` application
 
 [source,bash]
 ----
-oc get deploymentConfig/time -o yaml
+oc get deploymentConfig/myhttpdapp -o yaml
 ----
 
 Note that the *replicas*: is set to *1*. This tells OpenShift that when this application deploys, make sure that there is 1 instance.
@@ -45,11 +45,11 @@ To view the `rc` for your application first get the current pod running.
 oc get pods
 ----
 
-This shows that the build `time-1` is running in pod `45jtc`. Let us view the `rc` on this build.
+This shows that the build `myhttpdapp-1` is running in pod `45jtc`. Let us view the `rc` on this build.
 
 [source,bash]
 ----
-oc get rc/time-1
+oc get rc/myhttpdapp-1
 ----
 ====
 [NOTE]
@@ -65,16 +65,18 @@ To scale your application we will edit the `deploymentConfig` to *3*.
 
 Open your browser to the Overview page and note you only have one instance running.
 
-image::lab6-scale_updown_overview.png['scale_updown_overview', width=1024]
+image::lab6-single_pod.png['single_pod', width=1024]
 
 Now scale your application using the `oc scale` command (remembering to specify the `dc`)
 
 [source,bash]
 ----
-oc scale --replicas=3 dc/time
+oc scale --replicas=3 dc/myhttpdapp
 ----
 
 If you look at the web console and you will see that there are 3 instances running now
+
+image::lab6-thee_pods.png['thee_pods', width=1024]
 
 ====
 [NOTE]
@@ -88,11 +90,11 @@ On the command line, see how many pods you are running now:
 oc get pods
 ----
 
-You now have 3 instances of `time-1` running (each with a different pod-id). If you check the `rc` of the `time-1` build you will see that it has been updated by the 'dc'.
+You now have 3 instances of `myhttpdapp-1` running (each with a different pod-id). If you check the `rc` of the `myhttpdapp-1` build you will see that it has been updated by the 'dc'.
 
 [source,bash]
 ----
-oc get rc/time-1
+oc get rc/myhttpdapp-1
 ----
 
 === Step 4: Idling the application
@@ -104,13 +106,13 @@ Run the following command to find the available endpoints
 oc get endpoints
 ----
 
-Note that the name of the endpoints is `time` and there are three ips addresses for the three pods.
+Note that the name of the endpoints is `myhttpdapp` and there are three ips addresses for the three pods.
 
-Run the 'oc idle endpoints/time' command to idle the application
+Run the 'oc idle endpoints/myhttpdapp' command to idle the application
 
 [source,bash]
 ----
-oc idle endpoints/time
+oc idle endpoints/myhttpdapp
 ----
 
 Go back to the webconsole. You will notice that the pods show up as idled.
@@ -119,9 +121,14 @@ image::lab6-idled_pods.jpeg['idled_pods', width=1024]
 
 At this point the application is idled, the pods are not running and no resources are being used by the application. This doesn’t mean that the application is deleted. The current state is just saved.. that’s all.
 
-=== Step 6: Reactivate your application Now click on the application route URL or access the application via curl.
+=== Step 6: Reactivate your application
 
-Note that it takes a little while for the application to respond. This is because pods are spinning up again. You can notice that in the web console.
+Now click on the application route URL or access the application via curl.
+
+====
+[NOTE]
+It takes a little while for the application to respond. This is because pods are spinning up again. You can notice that in the web console.
+====
 
 In a little while the output comes up and your application would be up with 3 pods.
 
@@ -129,11 +136,11 @@ So, as soon as the user accesses the application, it comes up!!!
 
 === Step 7: Scaling Down
 
-Scaling down is the same procedure as scaling up. Use the `oc scale` command on the `time` application `dc` setting.
+Scaling down is the same procedure as scaling up. Use the `oc scale` command on the `myhttpdapp` application `dc` setting.
 
 [source,bash]
 ----
-oc scale --replicas=1 dc/time
+oc scale --replicas=1 dc/myhttpdapp
 ----
 
 Alternately, you can go to project overview page and click on down arrow twice to remove 2 running pods.

@@ -34,7 +34,7 @@ oc new-project myjbossapp-{{< urifqdn_user "labuser""" >}} --display-name="My JB
 
 We will be using a sample application called *Kitchensink* (https://github.com/RedHatWorkshops/kitchensink). Taking that source-code; we will use the JBoss ImageStream (or the builder image) to assemble our application.
 
-Open the browser and select your new project *My JBoss Applications*.
+Open the browser and select your new project *My JBoss Applications*. This can be done by clicking *OPENSHIFT CONTAINER PLATFORM* in the top left or selecting the project in the drop down list below that.
 
 Click into *Browse Catalog* button.
 
@@ -42,18 +42,12 @@ In the search text box type *EAP 6.4* and select *JBoss EAP 6.4 (no https)*.
 
 Click *Next*
 
-- In the Add to Project box select the created *"My JBoss Applications"* Project
-
-- Add to Project: select your project name if it is not show
+Fill in the below values:
 
 - Application Name: ks
-
 - Git Repository URL: https://github.com/RedHatWorkshops/kitchensink
-
 - Git Reference: master
-
 - Context Directory: /
-
 - Maven mirror URL: {{NEXUS_URL}}
 
 ====
@@ -65,7 +59,7 @@ image::lab4-jboss_wizard_configuration.png['jboss_wizard_configuration', width=1
 
 image::lab4-jboss_wizard_configuration2.png['jboss_wizard_configuration2', width=1024]
 
-Click Next Select Create a secret in …​ to be used later Click on *Create* and then on *Continue to the project overview*.
+Click Next Select *Create a secret in …​ to be used later* Click on *Create* and then on *Continue to the project overview*.
 
 === Step 3: Build
 

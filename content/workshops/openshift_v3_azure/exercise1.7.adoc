@@ -31,7 +31,7 @@ mkdir deployments
 
 FYI:
 
-You can also create a modules directory at the same level as ``deployments'' above and have additional modules there or configuration files. For example:
+You can also create a modules directory at the same level as *deployments* above and have additional modules there or configuration files. For example:
 
 [source,bash]
 ----
@@ -48,12 +48,8 @@ As an example here we have a WAR file called `petstore.war` that we renamed to `
 
 [source,bash]
 ----
-ls -lR
-----
-
-[source,bash]
-----
-./deployments:
+wget https://raw.githubusercontent.com/RedHatWorkshops/ps/master/deployments/ROOT.war -P ./deployments/
+ls -lr ./deployments
 ----
 
 === Step 2: Using builder image
@@ -101,6 +97,11 @@ Now, expose the service as a route to be able to use it from the browser.
 [source,bash]
 ----
 oc expose svc myapp
+----
+
+[source,bash]
+----
+oc get route
 ----
 
 You can use the route to access the application using the URL.
