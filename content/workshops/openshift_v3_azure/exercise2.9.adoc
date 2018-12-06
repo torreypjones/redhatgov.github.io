@@ -67,7 +67,7 @@ oc get route
 
 [source,bash]
 ----
-curl nodejs-hello-rsync-{{< urifqdn_user "labuser""" >}}.apps.workshop.osecloud.com
+curl nodejs-hello-rsync-{{< urifqdn_user "labuser""" >}}.104.209.170.217.nip.io
 ----
 
 === Step 4: Make code changes and sync with rsync
@@ -110,7 +110,7 @@ Now test the application again. This time it should show the output in two lines
 
 [source,bash]
 ----
-curl nodejs-hello-rsync-veer.apps.workshop.osecloud.com
+curl nodejs-hello-rsync-veer.104.209.170.217.nip.io
 ----
 
 Note that pod did not restart, we did not have to check into git repo and rebuild the image. The changes moved from your workstation directly to the pod.

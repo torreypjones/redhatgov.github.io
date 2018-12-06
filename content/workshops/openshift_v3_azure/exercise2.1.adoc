@@ -33,7 +33,9 @@ oc new-project scm-web-hooks-{{< urifqdn_user "labuser""" >}} --display-name="Te
 
 === Step 2: Create new application
 
-We will use the forked repository from the previous lab.
+- Login into GitLab https://github.com/login.
+- Create your user account if you dont already have one.
+- Fork this repository https://github.com/RedHatWorkshops/bluegreen into your account by clicking in the Fork button to the right of the repository name.
 
 ====
 [NOTE]
@@ -44,6 +46,8 @@ Please replace your_github_username with the your github username in the command
 ----
 oc new-app --image-stream=php --code=https://github.com/your_github_username/bluegreen.git --name=scm-web-hooks
 ----
+
+image::lab10-oc_new_app.png['oc_new_app', width=1024]
 
 === Step 3: Look at some of the created resources
 
@@ -100,7 +104,7 @@ oc logs build/scm-web-hooks-1
 
 The build should finish similar to:
 
-
+image::lab10-oc_build_logs.png['oc_build_logs', width=1024]
 
 === Step 4: Create a route
 
@@ -111,21 +115,21 @@ oc get service
 
 ====
 [NOTE]
-In this example, I am using a domain name of *apps.workshop.osecloud.com*. Ask the instructor for the domain name suffix for your setup an change it.
+In this example, I am using a domain name of *104.209.170.217.nip.io*. Ask the instructor for the domain name suffix for your setup an change it.
 ====
 
 [source,bash]
 ----
-oc expose service scm-web-hooks --hostname=scm-web-hooks.{{< urifqdn_user "labuser""" >}}.apps.workshop.osecloud.com
+oc expose service scm-web-hooks --hostname=scm-web-hooks.{{< urifqdn_user "labuser""" >}}.104.209.170.217.nip.io
 ----
 
 === Step 5: Test the application
 
-Use the newly created route, in the above case scm-web-hooks.{{< urifqdn_user "labuser""" >}}.apps.workshop.osecloud.com and paste it in your browser.
+Use the newly created route, in the above case scm-web-hooks.{{< urifqdn_user "labuser""" >}}.104.209.170.217.nip.io and paste it in your browser.
 
 You should see:
 
-image::lab10-green_deployment.png['green_deployment', width=1024]
+image::lab10-blue_deployment.png['blue_deployment', width=1024]
 
 *Part II*
 
@@ -163,9 +167,18 @@ image::lab10-github_add_webhook.jpg['github_add_webhook', width=1024]
 
 === Step 3: Redeploy the application
 
-- Edit in your GitHub account the image.php file.
-- One of the lines in line 9 or 10 should be commented out. Make a change so that the line that was previously commented out becomes active and pound the other one.
-- Commit the file.
+- Navigate to the forked bluegreen repository you used to create the application.
+- Select the image.php file, then select the pencil to edit the file.
+- Comment out the imagefilledrectangle() line by placing a `//` infront of it.
+- Add the following after the line you just commented out.
+
+[source,bash]
+----
+ImageFillToBorder($im, 0, 0, $white, $white);
+imageRectangle($im, 0, 0, 199, 199, $color);
+----
+
+- Commit the file
 
 === Step 4: Monitor new deployment process
 
@@ -181,6 +194,8 @@ oc get builds
 ----
 oc logs build/the-new-build-process-name
 ----
+
+After a new pod is deployed, refreshing the browser should reveal a blue square outline with a white center.
 
 *Summary*
 

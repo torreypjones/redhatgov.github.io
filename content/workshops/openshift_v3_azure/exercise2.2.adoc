@@ -40,7 +40,7 @@ oc get dc
 - The latest and active version for the application is 2
 - If we display the application in the browser we see:
 
-image::lab11-blue_app.jpg['blue_app', width=1024]
+image::lab11-blue_square.png['blue_square', width=1024]
 
 === Step 2: Rollback the application
 
@@ -51,16 +51,18 @@ Using the previous command we ran to retrieve the deployment configuration, we w
 oc rollback scm-web-hooks --to-version=1
 ----
 
-If we re-run the command to list the build configurations, we now see:
+If we re-run the command to list the build configurations:
 
 [source,bash]
 ----
 oc get dc
 ----
 
-- So OpenShift has rolled back the application to version 1 and created a new build configuration.
+We now see
+
+- OpenShift has rolled back the application to version 1 and created a new build configuration.
 - Reloading the application now displays:
 
-image::lab11-green_app.jpg['green_app', width=1024]
+image::lab11-blue_app.png['blue_app', width=1024]
 
 {{< importPartial "footer/footer_openshift_v3_azure.html" >}}

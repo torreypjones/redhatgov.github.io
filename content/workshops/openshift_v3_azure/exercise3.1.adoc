@@ -66,7 +66,7 @@ spec:
 
 Note that the build configuration uses *JenkinsPipelineStrategy*. Also the *spec.strategy.jenkinsPipelineStrategy.jenkinsfile* is the actual pipeline that runs. We will discuss that in the next step.
 
-This will spin up a Jenkins pod. Give it a few minutes as it takes time to download and deploy jenkins. You will also see the URL assigned to your Jenkins. It would be something like https://jenkins-pipeline-{{< urifqdn_user "labuser""" >}}.apps.workshop.osecloud.com
+This will spin up a Jenkins pod. Give it a few minutes as it takes time to download and deploy jenkins. You will also see the URL assigned to your Jenkins. It would be something like https://jenkins-pipeline-{{< urifqdn_user "labuser""" >}}.104.209.170.217.nip.io
 
 If you click on that URL, you will be taken to Jenkins Console. *Note:* The browser may complain that the URL is insecure. Click on advanced and proceed to url.
 
@@ -153,6 +153,6 @@ Come back and watch the Web Console, you will notice that a new build has just s
 
 Bonus Points: Watch the videos here https://blog.openshift.com/create-build-pipelines-openshift-3-3/ and understand how to create a pipeline that goes across multiple projects.
 
-Congratulations!! In this lab, you have learnt how to set up and run your own CI/CD pipeline on OpenShift.
+Congratulations!! In this lab, you have learned how to set up and run your own CI/CD pipeline on OpenShift.
 
 {{< importPartial "footer/footer_openshift_v3_azure.html" >}}

@@ -22,7 +22,7 @@ In the last lab, we created a configuration to connect to the MySQL database by 
 
 Ensure you are in the spring-{{< urifqdn_user "labuser""" >}}
 
-Based on what you have learnt in the previous labs, create a new Postgresql database pod i.e. *Add to project*, search for *postgresql*, choose *postgresql-ephemeral*. You will need to key in the following values.
+Based on what you have learned in the previous labs, create a new Postgresql database pod i.e. *Add to project*, search for *postgresql*, choose *postgresql-ephemeral*. You will need to key in the following values.
 
 - Database Service Name: postgresql
 - MySQL Connection Username: user
@@ -125,11 +125,11 @@ Note the contents of this file are what you added to the ConfigMap.
 
 === Step 5: Test your application
 
-Click the application url now i.e http://bootapp-spring-{{< urifqdn_user "labuser""" >}}.apps.workshop.osecloud.com/.
+Click the application url now i.e http://bootapp-spring-{{< urifqdn_user "labuser""" >}}.104.209.170.217.nip.io/.
 
 ====
 [NOTE]
-In this example, I am using a domain name of *apps.workshop.osecloud.com*. Ask the instructor for the domain name suffix for your setup an change it.
+In this example, I am using a domain name of *104.209.170.217.nip.io*. Ask the instructor for the domain name suffix for your setup an change it.
 ====
 
 It will open a new tab and your running application will greet you
@@ -138,7 +138,7 @@ Hello from bootapp-2-06a4b
 
 Also watch the pod logs either using web console or using CLI. For example `oc logs -f bootapp-2-06a4b` Watch out for connection url in the output.
 
-Now try the /dbtest endpoint i.e. http://bootapp-spring-{{< urifqdn_user "labuser""" >}}.apps.workshop.osecloud.com/dbtest.
+Now try the /dbtest endpoint i.e. http://bootapp-spring-{{< urifqdn_user "labuser""" >}}.104.209.170.217.nip.io/dbtest.
 
 Note that the output is still from the MySQLDB.
 
@@ -159,7 +159,7 @@ So even after the *application.properties* file is updated in the pod, it is not
 
 [source,bash]
 ----
-curl -X POST http://bootapp-spring-{{< urifqdn_user "labuser""" >}}.apps.workshop.osecloud.com/refresh
+curl -X POST http://bootapp-spring-{{< urifqdn_user "labuser""" >}}.104.209.170.217.nip.io/refresh
 ----
 
 Now note that the pod logs show that the application context is refreshed.
@@ -184,6 +184,6 @@ connection url: jdbc:postgresql://postgresql.spring-{{< urifqdn_user "labuser"""
 
 *Note* in this exercise, the pod was never redeployed. The application.properties were dynamically updated.
 
-*Summary:* In this lab, we have learnt the ConfigMap’s flexibility and how it allows dynamic updates to the pod configuration.
+*Summary:* In this lab, we have learned the ConfigMap’s flexibility and how it allows dynamic updates to the pod configuration.
 
 {{< importPartial "footer/footer_openshift_v3_azure.html" >}}

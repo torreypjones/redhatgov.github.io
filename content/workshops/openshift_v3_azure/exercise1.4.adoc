@@ -138,12 +138,12 @@ Now access the application by using the route you got in the previous step. You 
 
 [source,bash]
 ----
-curl ks-myjbossapp-{{< urifqdn_user "labuser""" >}}.apps.workshop.osecloud.com
+curl ks-myjbossapp-{{< urifqdn_user "labuser""" >}}.104.209.170.217.nip.io
 ----
 
 ====
 [NOTE]
-In this example, I am using a domain name of *apps.workshop.osecloud.com*. Ask the instructor for the domain name suffix for your setup an change it.
+In this example, I am using a domain name of *104.209.170.217.nip.io*. Ask the instructor for the domain name suffix for your setup an change it.
 ====
 
 Go to https://ks-myjbossapp-{{< urifqdn_user "labuser""" >}}.workshop.osecloud.com via your browser. Please replace your username  and domain with yours.

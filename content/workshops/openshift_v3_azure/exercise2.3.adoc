@@ -75,9 +75,11 @@ Now describe this image stream to get the full image id:
 oc describe is welcome-php
 ----
 
+image::lab12-oc_describe_is.png['oc_describe_is']
+
 In this case, the full image Id is
 
-docker-registry.default.svc:5000/development-{{< urifqdn_user "labuser""" >}}/welcome-php@sha256:157334d73dfc8dfdf733257b05c3fecaee236d36f69afa207395715fbe882abf
+docker-registry.default.svc:5000/development-{{< urifqdn_user "labuser""" >}}/welcome-php@sha256:37e5a1261655d5fa893996bffdc1abe74bd143f2973b58c97baec010d37dba0a
 
 Now let us assume that this docker image is good and is ready to promote to QA. Let us tag this docker image using the `oc tag` command.
 
@@ -85,7 +87,7 @@ The format is
 
 [source,bash]
 ----
-oc tag *FullImageId* development-{{< urifqdn_user "labuser""" >}}/myapp:promote-qa
+oc tag *FullImageId* development-{{< urifqdn_user "labuser""" >}}/welcome-php:promote-qa
 ----
 
 Check the following commands and replace the values where needed:
@@ -93,7 +95,7 @@ Check the following commands and replace the values where needed:
 [source,bash]
 ----
 oc tag \
-docker-registry.default.svc:5000/development-{{< urifqdn_user "labuser""" >}}/welcome-php@sha256:157334d73dfc8dfdf733257b05c3fecaee236d36f69afa207395715fbe882abf \
+development-{{< urifqdn_user "labuser""" >}}/welcome-php:latest \
 development-{{< urifqdn_user "labuser""" >}}/welcome-php:promote-qa
 ----
 
@@ -108,7 +110,9 @@ Now you can switch over to the QA project and deploy the docker image that we ta
 [source,bash]
 ----
 oc project testing-{{< urifqdn_user "labuser""" >}}
+
 oc new-app development-{{< urifqdn_user "labuser""" >}}/welcome-php:promote-qa
+
 oc expose service welcome-php
 ----
 

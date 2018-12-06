@@ -195,6 +195,6 @@ curl myhttpdapp-mycliproject-labuser{{< urifqdn_user "" >}}.104.209.170.217.nip.
 In this example, I am using a domain name of *104.209.170.217.nip.io*. Ask the instructor for the domain name suffix for your setup an change it.
 ====
 
-Congratulations!! In this exercise you have learnt how to create, build and deploy an application using OpenShift’s *Docker Build strategy*.
+Congratulations!! In this exercise you have learned how to create, build and deploy an application using OpenShift’s *Docker Build strategy*.
 
 {{< importPartial "footer/footer_openshift_v3_azure.html" >}}

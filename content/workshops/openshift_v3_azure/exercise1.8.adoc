@@ -68,7 +68,7 @@ metadata:
   selfLink: /oapi/v1/namespaces/myjbossapp-{{< urifqdn_user "labuser""" >}}/routes/ks
   uid: fba5d1e6-a85f-11e5-be21-fa163ec58dad
 spec:
-  host: ks-myjbossapp-{{< urifqdn_user "labuser""" >}}.apps.workshop.osecloud.com
+  host: ks-myjbossapp-{{< urifqdn_user "labuser""" >}}.104.209.170.217.nip.io
   tls:
     termination: edge
   port:
@@ -81,7 +81,7 @@ status: {}
 
 ====
 [NOTE]
-In this example, I am using a domain name of *apps.workshop.osecloud.com*. Ask the instructor for the domain name suffix for your setup an change it.
+In this example, I am using a domain name of *104.209.170.217.nip.io*. Ask the instructor for the domain name suffix for your setup an change it.
 ====
 
 === Step 4: Verify

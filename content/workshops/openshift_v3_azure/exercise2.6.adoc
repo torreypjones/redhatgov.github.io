@@ -53,18 +53,51 @@ You can also search your spring boot image by running the following command
 oc new-app --search springboot
 ----
 
-To add using the web console, select *Add to Project*, and then *Import YAML/JSON* tab on the top. Then you can copy paste the above imagestream contents into the text box and press *Create* button.
+To add using the web console, slect the *Spring Project*, select *Add to Project*, and then *Import YAML/JSON* tab on the top. Then you can copy paste the below imagestream contents into the text box and press *Create* button.
 
-=== Step 3:
+[source, bash]
+----
+{
+    "kind": "ImageStream",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "springboot"
+    },
+    "spec": {
+        "tags": [
+            {
+                "name": "latest",
+                "annotations": {
+                    "description": "Spring Boot S2I Image CentOS based",
+                    "iconClass": "icon-jboss",
+                    "tags": "builder,springboot,java,maven",
+                    "supports": "springboot,java:8,maven",
+                    "version": "1.0"
+                },
+            "from": {
+              "kind": "DockerImage",
+              "name": "docker.io/veermuchandi/spring-mvn-base:latest"
+            }
+            }
+        ]
+    }
+}
+----
+
+=== Step 3: Create the application
+
+Now it is time to create your application. Press on *Add to Project* button on the web console. This will take you to *Browse Catalog*. You will start seeing *springboot* listed in the catalog. If you have trouble finding it, type *spring* in the *filter box*, and you should find it.
 
 Now use that S2I image to deploy your sample spring boot application https://github.com/RedHatWorkshops/spring-sample-app on OpenShift using your experience from the previous labs.
 
-[source,bash]
-----
-oc new-app springboot~https://github.com/RedHatWorkshops/spring-sample-app.git --name bootapp
-----
+Click on the springboot image:
 
-Congratulations!! you have learnt to make an image stream available in your project.
+- Click *Next*
+- Application Name: *bootapp*
+- Git Repository: *https://github.com/RedHatWorkshops/spring-sample-app.git*
+- Click *Create*
+
+Congratulations!! you have learned to make an image stream available in your project.
 
 *If you got a question in mind* - Well how can I make this image available for everyone? Pat yourself on your back.. or ask your colleague to do it ;). You are thinking right. All you need to do is tell your openshift cluster administrator.
 *Answer* The cluster administrator will add the image to the `openshift` project and everyone will start seeing it.

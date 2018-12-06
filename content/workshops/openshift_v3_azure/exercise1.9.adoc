@@ -73,6 +73,8 @@ oc logs build/blue-1
 
 Once the build finishes you should see something similar to:
 
+image::lab9-oc_logs_blue1.png['oc_logs_blue1', width=1024]
+
 === Step 5: Check application deployment status
 
 [source,bash]
@@ -81,8 +83,6 @@ oc get pods
 ----
 
 Notice that the build pod has exited and you now have a single instance of the application running under one single pod.
-
-This application displays a blue square.
 
 === Step 6: List the service
 
@@ -93,11 +93,11 @@ oc get service
 
 === Step 7: Create a route for the application
 
-Remember to substitute the username and FQDN. Expose the service:
+*Remember to substitute the username and FQDN*. Expose the service:
 
 [source,bash]
 ----
-oc expose service blue --hostname=bluegreen.{{< urifqdn_user "labuser""" >}}.apps.workshop.osecloud.com --name=bluegreen
+oc expose service blue --hostname=bluegreen.{{< urifqdn_user "labuser""" >}}.104.209.170.217.nip.io --name=bluegreen
 ----
 
 === Step 8: Test the application
@@ -138,7 +138,7 @@ Wait until the application is built and deployed. You should now see two service
 oc get service
 ----
 
-Edit the previously created route and change the service name (from `blue` to `green`), all the way at the bottom to the new service that was just created. You are essentially still using the FQDN you had previously created. However, that route will now point to a different (green) service.
+Edit the previously created route and change the service name (from `blue` to `green`), the service name will be located in the `spec:` section. You are essentially still using the FQDN you had previously created. However, that route will now point to a different (green) service.
 
 [source,bash]
 ----
@@ -147,25 +147,39 @@ oc edit route bluegreen
 
 [source,bash]
 ----
-apiVersion: v1
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  creationTimestamp: 2015-12-22T19:16:28Z
+  creationTimestamp: 2018-12-06T13:23:55Z
   labels:
-    app: green
+    app: blue
   name: bluegreen
-  namespace: bluegreen-UserName
-  resourceVersion: "2969408"
-  selfLink: /oapi/v1/namespaces/bluegreen-{{< urifqdn_user "labuser""" >}}/routes/bluegreen
-  uid: 80829b59-a8e0-11e5-be21-fa163ec58dad
+  namespace: bluegreen-labuser50
+  resourceVersion: "290415"
+  selfLink: /apis/route.openshift.io/v1/namespaces/bluegreen-labuser50/routes/bluegreen
+  uid: 2e1874e4-f95a-11e8-bdc4-000d3a040847
 spec:
-  host: bluegreen.UserName.apps.workshop.osecloud.com
+  host: bluegreen.labuser50.104.209.170.217.nip.io
   port:
-    targetPort: "8080"
+    targetPort: 8080-tcp
   to:
     kind: Service
     name: green
-status: {}
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress:
+  - conditions:
+    - lastTransitionTime: 2018-12-06T13:23:55Z
+      status: "True"
+      type: Admitted
+    host: bluegreen.labuser50.104.209.170.217.nip.io
+    routerName: router
+    wildcardPolicy: None
 ----
 
 == Step 2: Test the application
@@ -178,9 +192,13 @@ oc get route
 - Copy the HOST/PORT and paste it in your browser.
 - You should now see the new version of the recently deployed application with a green rectangle.
 
+image::lab9-green_screen.png['green_screen', width=1024]
+
 *Part III*
 
 You can route traffic to both services. This is also known as "cannary in a colemine".
+
+Log into the web console if you are not already then select the Blue Green Project.
 
 === Step 1: *Edit Your Route* Using the lefthand side navigation; click on *Applications → Routes*. This will bring you to the *Route* overview page.
 
@@ -197,6 +215,8 @@ Here, set the weight to 50% on blue and 50% on green. This will make it to where
 image::lab9-bg-5050-split.png['bg-5050-split', width=1024]
 
 Once you click on *Save*; you should see this on the Route Overview page.
+
+image::lab9-bg_5050.png['bg_5050', width=1024]
 
 === Step 2: Test Your Settings
 

@@ -18,6 +18,11 @@ In this exercise we will deploy a SpringBoot application using a custom source t
 
 === Step 1: Using the knowledge you gained from the earlier labs create a new project with name `spring-{{< urifqdn_user "labuser""" >}}`
 
+[source,bash]
+----
+oc new-project spring-{{< urifqdn_user "labuser""" >}} --description="My spring-project" --display-name="Spring Project"
+----
+
 === Step 2: Create a new application using SpringBoot S2I Builder image.
 
 Here we will deploy sample code from a git repository https://github.com/RedHatWorkshops/spring-sample-app. Please take time to understand the code; it is pretty simple.
@@ -45,9 +50,9 @@ Check the route
 oc get route
 ----
 
-Wait for your application to be built and deployed. Using the knowlege you gained from the previous labs, check your build logs by running `oc logs -f <build pod name>`
+Wait for your application to be built and deployed. Using the knowlege you gained from the previous labs, check your build logs by running `oc logs -f bootapp-1-build`
 
-=== Step 3: Requesting Storage
+=== Step 3: Test the application
 
 Test your application by using the hostname assigned in the route.
 
