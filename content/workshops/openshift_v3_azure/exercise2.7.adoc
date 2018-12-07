@@ -23,6 +23,18 @@ If you already created the SpringBoot application in the previous lab deploy a s
 In this example, I am using a domain name of *104.209.170.217.nip.io*. Ask the instructor for the domain name suffix for your setup an change it.
 ====
 
+====
+[NOTE]
+If you have to expose the route use the below commands
+====
+
+[source,bash]
+----
+oc expose serice bootapp
+
+oc get route
+----
+
 Let’s take a moment to understand how this application is connecting to the HSQLDB. Look at the application.properties file in the code https://github.com/RedHatWorkshops/spring-sample-app/blob/master/application.properties and we have configured these spring datasource variables to use hsqldb.
 
 - spring.datasource.platform=hsqldb
@@ -54,7 +66,7 @@ Make sure you are in the spring-{{< urifqdn_user "labuser""" >}} project where y
 
 Feel free to use your own values, but make a note of the same (write down..we will need these)
 
-Click on the *Next* button then *Create* button and within a few min or two your MySQL database pod should be up and running.
+Click on the *Next* button then *Create* button and within a minute or two your MySQL database pod should be up and running.
 
 === Step 2: Configuring database connection params
 
@@ -127,8 +139,6 @@ So far, we have created a ConfigMap in the project but your springboot applicati
 
 Now we will mount the ConfigMap so that the springboot application can use it.
 
-Note there could be multiple spec's in your DC.
-
 We will now add a volume that points to our ConfigMap right under spec. It is explained here https://docs.openshift.com/container-platform/3.11/dev_guide/configmaps.html#configmaps-use-case-consuming-in-volumes
 
 [source,bash]
@@ -147,9 +157,16 @@ Save the changes and exit. If you now got the Overview page, you will see that t
 Once the deployment is complete
 
 - click on *Applications* then *Pods*
-- click on the *mysql* pod name
+- click on the *bootapp* pod name
 - go to the *Terminal* tab
 - verify that your `application.properties` are now available in the config folder
+
+[source,bash]
+----
+ls config
+
+cat config/application.properties
+----
 
 Note the contents of this file are what you added to the ConfigMap.
 

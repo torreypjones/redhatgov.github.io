@@ -19,8 +19,6 @@ In this lab, we will learn to create a build pipeline on OpenShift. This pipelin
 *Prerequisites:*
 
 - You need a github account if you want to make changes and test the pipeline kick-off.
-- You will be using the projects you created in the "Promoting Applications" lab.
-
 
 === Step 1: Create a new project
 
@@ -79,7 +77,7 @@ Now you will be taken to Jenkins console (that is running on OpenShift).
 
 === Step 3: Updating the pipeline
 
-Using left menu on the Web Console, select *Builds→Pipelines*. You will see that *myfirstpipeline* is created. Click on that.
+Using left menu on the Openshift Web Console, select *Builds→Pipelines*. You will see that *myfirstpipeline* is created. Click on that.
 
 Since we haven’t run the pipeline yet, the History tab shows nothing. If you click on the *Configuration* tab, you will see the build configuration details.
 
@@ -98,17 +96,29 @@ This means that we need a build configuration and deployment configuration for o
 
 Clone the following application into your github account https://github.com/VeerMuchandi/bluegreen if you haven’t already done it in a previous lab.
 
-Click on *Add to Project* on the project and select *PHP* latest image. We will use *myphp* as the application name. *Note* same name will be used for buildConfig and deployConfig by default.
+- Click on *Add to Project* on the project and select *PHP* latest image. We will use *myphp* as the application name. *Note* same name will be used for buildConfig and deployConfig by default.
+- Use your own github url if you want to test by pushing changes to code https://github.com/*GithubUserName*/bluegreen. Otherwise you can use https://github.com/VeerMuchandi/bluegreen.
+- Now click on the link *advanced options*. It will open up a bunch of options and we will edit those. Under the section *Build Configuration*, *uncheck* all the three check boxes for the following options
 
-Use your own github url if you want to test by pushing changes to code. Otherwise you can use https://github.com/VeerMuchandi/bluegreen.
+[source,bash]
+----
+Configure a webhook build trigger
+Automatically build a new image when the builder image changes
+Launch the first build when the build configuration is created
+----
 
-Now click on the link *advanced options*. It will open up a bunch of options and we will edit those. Under the section *Build Configuration*, *uncheck* all the three check boxes for the following options
-
-- Configure a webhook build trigger
-- Automatically build a new image when the builder image changes
-- Launch the first build when the build configuration is created
+image::lab19-build_config.png['build_config', width=1024]
 
 By unchecking these, we are disabling the start of the builds as we want to control those using pipeline.
+
+In the section Deployment Configuration, uncheck the two auto-deploy options
+
+- New image is available
+- Deployment configuration changes
+
+image::lab19-deployment_config.png['deployment_config', width=1024]
+
+By unchecking these, we are disabling the start of the deployments as we want to control those using pipeline.
 
 Now scroll down and click on the *Create* button.
 
@@ -120,11 +130,17 @@ Now click on the *Start Pipeline* button to start the pipeline.
 
 Notice the pipeline starts and *build* and *deploy* stages are executed.
 
+image::lab19-pipeline_complete.png['pipeline_complete', width=1024]
+
 Click on the *View log* link for the pipeline. It’ll take you to Jenkins and show the logs.
 
-In a couple of minutes, the *build* and *deploy* will complete, and your applicaiton will be deployed and scaled to 2 replicas. Now use the application to notice that the *blue* box is displayed.
+image::lab19-jenkins_log.png['jenkins_log', width=1024]
 
-Step 6: Configure webhook and trigger with changes (optional)
+In a couple of minutes, the *build* and *deploy* will complete, and your applicaiton will be deployed and scaled to 2 replicas.
+
+Now if we click on *Overview*, *myphp* and select the route, we should see our blue box outline.
+
+=== Step 6: Configure webhook and trigger with changes
 
 Navigate back to the *configuration tab* for the pipeline as explained in Step 3. Copy the value for *Github webhook* url.
 
@@ -132,24 +148,27 @@ Based on what you learn in the past, go to your github repository that you clone
 
 Tips
 
-- Navigate to Settings → Webhooks on your project in github
+- Navigate to Settings → Webhooks on your project in github and click *Add webhook*
 - Set the`Payload URL` to Github Webhook URL noted above
 - Make sure the Content Type is set to application/json
 - Press on Disable SSL
 - Press on Add Webhook
 
-Now edit the *image.php* file to uncomment the green box and comment the blue box as shown below
+Now edit the *image.php* file to uncomment the *image filled rectangle* and comment the *Image Fill To Border* shown below
 
 [source,bash]
 ----
 // Draw a filled rectangle
-//imagefilledrectangle($im, 0, 0, 199, 199, $blue);
-imagefilledrectangle($im, 0, 0, 199, 199, $green);
+imagefilledrectangle($im, 0, 0, 199, 199, $color);
+//ImageFillToBorder($im, 0, 0, $white, $white);
+imageRectangle($im, 0, 0, 199, 199, $color);
 ----
 
 and *Commit* changes.
 
-Come back and watch the Web Console, you will notice that a new build has just started. Once the build completes, you will also see the rolling deployment of the pods.
+Come back and watch the Web Console, you will notice that a new build has just started in the build pipeline. Once the build completes, you will also see the rolling deployment of the pods.
+
+Now if we click on *Overview*, *myphp* and select the route, we should see our blue box filled in.
 
 Bonus Points: Watch the videos here https://blog.openshift.com/create-build-pipelines-openshift-3-3/ and understand how to create a pipeline that goes across multiple projects.
 

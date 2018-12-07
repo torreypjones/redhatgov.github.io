@@ -112,18 +112,9 @@ Now verify the application.properties inside the pod (Go to bootapp pod terminal
 cat config/application.properties
 ----
 
-=== Step 4: Test the application connection
+image::lab17-cat_config.png['cat_config', width=1024]
 
-Once the deployment is complete
-
-- click on the pod circle
-- click on the pod name
-- get into the Terminal tab
-- verify that your `application.properties` are now available in the config folder
-
-Note the contents of this file are what you added to the ConfigMap.
-
-=== Step 5: Test your application
+=== Step 4: Test your application
 
 Click the application url now i.e http://bootapp-spring-{{< urifqdn_user "labuser""" >}}.104.209.170.217.nip.io/.
 
