@@ -1,5 +1,5 @@
 ---
-title: openshift_v3_azure workshop
+title: Openshiftv3 on Azure
 menu:
   main:
     parent: workshops
