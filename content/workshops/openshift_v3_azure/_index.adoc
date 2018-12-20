@@ -57,6 +57,6 @@ Hopefully you have your laptop with you. If not, please find a shoulder-surfing 
 
 {{% alert success %}}
 
-Special Thanks to Joel Adams!
+Special Thanks to Joel Adams and Mike Savage!
 
 {{% /alert %}}
