@@ -81,12 +81,17 @@ status: {}
 
 ====
 [NOTE]
-In this example, I am using a domain name of *104.209.170.217.nip.io*. Ask the instructor for the domain name suffix for your setup an change it.
+The spacing in a yaml file is crucial. Please review the spacing before saving your configuration.
 ====
 
 === Step 4: Verify
 
 Verify by visiting your page by using the *https://* URI
+
+[source,bash]
+----
+oc get route
+----
 
 ====
 [NOTE]

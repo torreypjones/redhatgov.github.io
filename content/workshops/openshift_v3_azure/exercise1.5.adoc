@@ -20,7 +20,7 @@ In this lab exercise we will learn how to use OpenShift Web Console to spin up a
 
 Based on the experience gained from the previous exercise, log into the OpenShift Web Console. You will see the list of Projects.
 
-Using the *Create Project* button, create a new project. We will call it *consoleproject-{{< urifqdn_user "labuser""" >}}*. Replace by your username to make this project unique. Type in a *Display Name* and *Description* of your choice.
+Using the *Create Project* button, create a new project. We will call it *consoleproject-{{< urifqdn_user "labuser""" >}}*. Type in a *Display Name* and *Description* of your choice.
 
 Press the *Create* button to complete the project creation from the Web Console. This will accomplish the same job as `oc new-project` from CLI.
 
@@ -116,7 +116,7 @@ You can check the build logs using the following command:
 
 [source,bash]
 ----
-oc logs build/pricelist-1
+oc logs -f build/pricelist-1
 ----
 
 Once the build completes, OpenShift initiates a deploy process. Once the deployment is complete, the frontend pod starts running. You will find the running pod when you navigate to *Applications→Pods* on the Web console.
@@ -148,14 +148,14 @@ You can verify this by logging into the database using `oc rsh`
 oc get pods
 ----
 
+image::lab5-oc_rsh.png['oc_rsh', width=1024]
+
 Here you’ll notice that the database pod is called `mysql-1-rxnlp`. Login to this pod using `oc rsh`
 
 [source,bash]
 ----
 oc rsh mysql-1-9v7r5
 ----
-
-image::lab5-oc_rsh.png['oc_rsh', width=1024]
 
 Run 'mysql -u root pricelist' to login and run the query.
 
@@ -177,6 +177,6 @@ image::lab5-sql_select.png['sql_select', width=1024]
 exit
 ----
 
-In this lab exercise you have seen a complete web application deployed using OpenShift templates in two parts. First we deployed the MySQL database. We added data manually by getting into the pod. Then we added the frontend code that was built using the OpenShift S2I process. You configured this frontend application to access the database using a service, in this case, the ``mysql'' service. The frontend is made accessible using a route for which you gave a URL.
+In this lab exercise you have seen a complete web application deployed using OpenShift templates in two parts. First we deployed the MySQL database. We added data manually by getting into the pod. Then we added the frontend code that was built using the OpenShift S2I process. You configured this frontend application to access the database using a service, in this case, the ``mysql`` service. The frontend is made accessible using a route for which you gave a URL.
 
 {{< importPartial "footer/footer_openshift_v3_azure.html" >}}

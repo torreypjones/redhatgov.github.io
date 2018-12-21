@@ -77,7 +77,7 @@ You can check the build logs by executing:
 
 [source,bash]
 ----
-oc logs myapp-1-build
+oc logs -f myapp-1-build
 ----
 
 === Step 4: Create the application

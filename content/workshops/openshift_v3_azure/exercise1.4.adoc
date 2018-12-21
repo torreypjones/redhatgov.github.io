@@ -20,11 +20,6 @@ In this exercise we will learn how to create an application using source code an
 
 If you want to, you can create a new project based on what you have learned in previous labs. Or you can create a new project for JBoss Applications.
 
-====
-[NOTE]
-Remember to replace the username before running the command.
-====
-
 [source,bash]
 ----
 oc new-project myjbossapp-{{< urifqdn_user "labuser""" >}} --display-name="My JBoss Applications" --description="A place for my JBoss EAP Applications"
@@ -34,7 +29,7 @@ oc new-project myjbossapp-{{< urifqdn_user "labuser""" >}} --display-name="My JB
 
 We will be using a sample application called *Kitchensink* (https://github.com/RedHatWorkshops/kitchensink). Taking that source-code; we will use the JBoss ImageStream (or the builder image) to assemble our application.
 
-Open the browser and select your new project *My JBoss Applications*. This can be done by clicking *OPENSHIFT CONTAINER PLATFORM* in the top left or selecting the project in the drop down list below that.
+Open the browser and select your new project *My JBoss Applications*. This can be done by clicking *OPENSHIFT* CONTAINER PLATFORM in the top left or selecting the project in the drop down list below that.
 
 Click into *Browse Catalog* button.
 
@@ -59,7 +54,7 @@ image::lab4-jboss_wizard_configuration.png['jboss_wizard_configuration', width=1
 
 image::lab4-jboss_wizard_configuration2.png['jboss_wizard_configuration2', width=1024]
 
-Click Next Select *Create a secret in …​ to be used later* Click on *Create* and then on *Continue to the project overview*.
+Click Next Select *Create a secret in My JBoss Applications to be used later* Click on *Create* and then on *Continue to the project overview*.
 
 === Step 3: Build
 

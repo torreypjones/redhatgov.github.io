@@ -38,6 +38,11 @@ oc new-project storage-{{< urifqdn_user "labuser""" >}} --description="My Storag
 oc new-app php~https://github.com/RedHatWorkshops/openshift-php-upload-demo
 ----
 
+[source,bash]
+----
+oc logs -f build/openshift-php-upload-demo-1
+----
+
 Once the application is deployed expose the route
 
 [source,bash]
@@ -123,13 +128,15 @@ Notice your data is GONE!
 exit
 ----
 
+Since we dont have any persistent storage attached to the container the data we uploaded is no longer available.
+
 === Step 3: Requesting Storage
 
 In OpenShift, Storage is abstracted out to where one simply "requests" storage and it’s up to the backend adminsitrator to provide the solution
 
 Log into the console and select your *Storage Project*
 
-On the webconsole on the left side navigation click on "*Storage*". It will bing you to the storage overview page.
+On the left side of the webconsole click on "*Storage*". It will bing you to the storage overview page.
 
 image::lab13-storage-overview.png['storage-overview', width=1024]
 
@@ -139,12 +146,12 @@ image::lab13-create-storage.png['create-storage', width=1024]
 
 Here you need to enter the following
 
-- Storage Class: <provided by your instructor>
+- Storage Class: glusterfs-storage
 - Name: myclaim
 - Access Mode: Shared Access (RWX)
 - Size: 1 GiB
 
-The *Storage Class* will be given to you by your instructor. The *Name* must be unique to the project namespace. The *Access Mode* means "how many apps can access this storage". For block storage you’d choose *Singe User (RWO)*; in this instance we are choosing *Shared Access (RWX)* (for File based storage like NFS). The Size is set to *1 GB* just for testing.
+The *Name* must be unique to the project namespace. The *Access Mode* means "how many apps can access this storage". For block storage you’d choose *Singe User (RWO)*; in this instance we are choosing *Shared Access (RWX)* (for File based storage like NFS). The Size is set to *1 GB* just for testing.
 
 Once you click on "Create" it’ll go from a *Pending* stage to *Bound*. You can see this on the command-line as well by checking your `pvc` (Which stands for Persistant Volume Claim)
 

@@ -18,12 +18,7 @@ In this lab you will learn how to create a new project on OpenShift and how to c
 
 === Step 1: Create a project or use an existing project
 
-If you want to, you can create a new project based on what you have learned in the previous lab. Since we already have a project we will use it. Run the following command to make sure.
-
-====
-[NOTE]
-Please replace UserName with the username assigned to you in the commands below.
-====
+If you want to, you can create a new project based on what you have learned in the previous lab. Since we already have a project we will use it. Run the following command to make sure you are on the right project.
 
 [source,bash]
 ----
@@ -183,7 +178,7 @@ Unlike in the previous lab, this time we did not use `--hostname` parameter whil
 
 === Step 6: Run the application
 
-Now run the application by using the route you provided in the previous step. You can use either curl or your browser. The application displays time. *If you don’t provide time.php extension, it displays apache’s default index page*.
+Now run the application by using the route you provided in the previous step. You can use either curl or your browser. The application displays the default Hello page.
 
 [source,bash]
 ----
@@ -192,7 +187,7 @@ curl myhttpdapp-mycliproject-labuser{{< urifqdn_user "" >}}.104.209.170.217.nip.
 
 ====
 [NOTE]
-In this example, I am using a domain name of *104.209.170.217.nip.io*. Ask the instructor for the domain name suffix for your setup an change it.
+In this example, I am using a domain name of *104.209.170.217.nip.io*. Look at the output of `oc get routes` for your domain name suffix.
 ====
 
 Congratulations!! In this exercise you have learned how to create, build and deploy an application using OpenShift’s *Docker Build strategy*.

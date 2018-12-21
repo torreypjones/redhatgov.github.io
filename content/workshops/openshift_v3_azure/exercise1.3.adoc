@@ -37,7 +37,7 @@ Key in the *username* and *password* provided by the instructor. You will now se
 [source,bash]
 ----
 login: {{< urifqdn_user "labuser""" >}}
-Password: SNX2018
+Password: RedHat123
 ----
 
 image::lab3-service_catalog.png[title='service_catalog', width=1024]
