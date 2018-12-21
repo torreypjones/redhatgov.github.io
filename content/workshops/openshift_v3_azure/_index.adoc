@@ -53,6 +53,8 @@ Hopefully you have your laptop with you. If not, please find a shoulder-surfing 
 
 {{< labs openshift_v3_azure >}}
 
+If you would like to see how the infrastructure for the lab is created please see https://github.com/Joel-Adams/openshiftv3_infra.
+
 {{< importPartial "footer/footer_openshift_v3_azure.html" >}}
 
 {{% alert success %}}
