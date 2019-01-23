@@ -83,7 +83,6 @@ To add using the web console, slect the *Spring Project*, select *Add to Project
     }
 }
 ----
-
 === Step 3: Create the application
 
 Now use that S2I image to deploy your sample spring boot application https://github.com/RedHatWorkshops/spring-sample-app on OpenShift using your experience from the previous labs.
