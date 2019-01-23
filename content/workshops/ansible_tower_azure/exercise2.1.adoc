@@ -214,7 +214,7 @@ Click on INVENTORIES image:at_inv_icon.png[Inv,100,35]
 
 === Step 2: Add a new inventory
 
-Select  ADD   image:at_add.png[Add,35,25]
+Select  ADD   image:at_add.png[Add,35,25] :inventory
 
 === Step 3: Complete the Inventory form
 
