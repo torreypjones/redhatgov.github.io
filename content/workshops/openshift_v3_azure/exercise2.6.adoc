@@ -55,7 +55,7 @@ oc new-app --search springboot
 
 To add using the web console, slect the *Spring Project*, select *Add to Project*, and then *Import YAML/JSON* tab on the top. Then you can copy paste the below imagestream contents into the text box and press *Create* button.
 
-[source,bash]
+[source,xml]
 ----
 {
     "kind": "ImageStream",
