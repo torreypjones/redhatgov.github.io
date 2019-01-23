@@ -55,7 +55,7 @@ oc new-app --search springboot
 
 To add using the web console, slect the *Spring Project*, select *Add to Project*, and then *Import YAML/JSON* tab on the top. Then you can copy paste the below imagestream contents into the text box and press *Create* button.
 
-[source,xml]
+[source,bash]
 ----
 {
     "kind": "ImageStream",
@@ -87,7 +87,7 @@ To add using the web console, slect the *Spring Project*, select *Add to Project
 
 Now use that S2I image to deploy your sample spring boot application https://github.com/RedHatWorkshops/spring-sample-app on OpenShift using your experience from the previous labs.
 
-[souce,bash]
+[source,bash]
 ----
 oc new-app springboot~https://github.com/RedHatWorkshops/spring-sample-app.git --name bootapp
 ----
