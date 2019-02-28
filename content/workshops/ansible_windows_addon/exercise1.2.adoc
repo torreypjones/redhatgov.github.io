@@ -1,0 +1,142 @@
+---
+title: "Exercise 1.2 - Creating a playbook that searches for applies windows patches"
+workshops: ansible_windows_addon
+workshop_weight: 10
+layout: lab
+---
+
+:domain_name: redhatgov.io
+:icons: font
+:imagesdir: /workshops/ansible_tower_azure/images
+
+= Exercise 1.1 - Creating a playbook that searches and applies patches
+
+== Section 1: the FoundUpdates variable
+
+In the previous exercise, we created a playbook that registered the `FoundUpdates` variable.  This is a complex variable that was returned from the `win_updates` module. It has the following structure (as defined in the Ansible docs for the module):
+
+[source,bash]
+----
+    "FoundUpdates": {
+        "changed": false,
+        "failed": false,
+        "filtered_updates": {},
+        "found_update_count": 5,
+        "installed_update_count": 0,
+        "reboot_required": false,
+        "updates": {
+            "53fcde67-57e4-4d25-a81a-d4fbec0df09a": {
+                "id": "53fcde67-57e4-4d25-a81a-d4fbec0df09a",
+                "installed": false,
+                "kb": [
+                    "4052623"
+                ],
+                "title": "Update for Windows Defender Antivirus antimalware platform - KB4052623 (Version 4.18.1902.2)"
+            },
+            .
+            . (truncated for readability)
+            .
+            "cfa0a5cf-ab26-4bc5-9a7b-a19b61655b3d": {
+                "id": "cfa0a5cf-ab26-4bc5-9a7b-a19b61655b3d",
+                "installed": false,
+                "kb": [
+                    "4487038"
+                ],
+                "title": "2019-02 Security Update for Adobe Flash Player for Windows 10 Version 1803 for x64-based Systems (KB4487038)"
+            }
+        }
+    }
+}
+----
+
+Some key attributes to pay attention to in this result variable are:
+- installed_update_count
+- found_update_count
+- reboot_required
+- updates
+
+We will leverage each of those variables moving forward. Each are self explanatory except `updates`. `updates` is a 'List of updates that were found/installed'
+
+== Section 2: process each update individually
+
+Of course, we could just change the previous `win_update` task to `state: installed` and be done with it. But what fun is that?  Also, in larger enterprises, being able to iterate over and operate on each individual patch is beneficial. What happens when a patch fails to install for some reason?  Or do we want to notifiy anyone that we're about to reboot their production server?
+
+Anyhow - lets look at how to proceed;  we're going to use a method that could be considered intermediate or advanced, but will allow us to seperate the overall process into different parts for supportability reasons.
+
+the last task we need to add to our `windows-update-example.yaml` is
+
+.windows-update-example.yaml (Example)
+[source,bash]
+----
+#note: processing of each update found could probably be done Async using parralell processing with Ansible...
+    - name: process each found update
+      include: windows-process-updates.yaml v="{{ update_item }}"
+      with_items: "{{ FoundUpdates.updates }}"
+      loop_control:
+        loop_var: update_item
+----
+
+some folks may want to observe the commented note in the playbook... can anyone say enhancement request?
+
+anyway - what we do here, is create a loop, to loop over the `updates` list that is found in the `FoundUpdates` variable that we registered from our search task; and pass each unique value into an `include` playbook. We will see what this included playbook looks like in a moment.
+
+and now your complete `windows-update-example.yaml` should look like:
+.windows-update-example.yaml (Example)
+[source,bash]
+----
+- name: a series of tasks to demonstrate interaction with windows hosts via ansible
+  hosts: all
+
+  tasks:
+    - name: ping hosts
+      action: win_ping
+
+    - name: check for some windows updates
+      win_updates:
+        category_names:
+          - Application
+          - Connectors
+          - CriticalUpdates
+          - DefinitionUpdates
+          - DeveloperKits
+          - FeaturePacks
+          - Guidance
+          - SecurityUpdates
+          - ServicePacks
+          - Tools
+          - UpdateRollups
+          - Updates
+        state: searched
+        log_path: C:\ansible_wu.txt
+      register: FoundUpdates
+    - debug: var=FoundUpdates
+
+    - name: print total number of updates found
+      debug:
+        msg: "Found {{ FoundUpdates.found_update_count }} updates"
+
+    - name: print each update found
+      debug:
+        msg: "Found {{ FoundUpdates.updates }} "
+
+#note: processing of each update found could probably be done Async using parralell processing with Ansible...
+    - name: process each found update
+      include: windows-process-updates.yaml v="{{ update_item }}"
+      with_items: "{{ FoundUpdates.updates }}"
+      loop_control:
+        loop_var: update_item
+
+----
+
+
+
+
+
+== Section 3: the windows-process-updates.yaml
+
+Need to finish this
+
+
+
+
+{{< importPartial "footer/footer_azure.html" >}}

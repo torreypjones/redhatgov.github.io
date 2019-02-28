@@ -1,0 +1,268 @@
+---
+title: "Exercise 1.1 - Creating a playbook that searches for windows patches"
+workshops: ansible_windows_addon
+workshop_weight: 10
+layout: lab
+---
+
+:domain_name: redhatgov.io
+:icons: font
+:imagesdir: /workshops/ansible_tower_azure/images
+
+= Exercise 1.1 - Creating a playbook that searches patches
+
+== Section 1: Create the playbook!
+
+Now that we are comfortable running some ad hoc commands AGAINST WINDOWS Nodes, lets take the next step and do something that may actually be useful!
+
+=== Set Up playbook
+
+Define directory structure
+
+[source,bash]
+----
+mkdir playbooks
+cd playbooks
+mkdir windows-example
+cd windows-example
+----
+
+
+create a file named `windows-update-example.yaml` and open it in `vi`
+
+lets create a simple playbook to ping our host(s) and ensure we have the framework in place:
+
+.windows-update-example.yaml (example)
+[source,bash]
+----
+- name: a series of tasks to demonstrate interaction with windows hosts via ansible
+  hosts: all
+
+  tasks:
+    - name: ping hosts
+      action: win_ping
+----
+
+now lets run our simple playbook
+
+[source,bash]
+----
+cd ../..
+ansible-playbook -i windows.hosts -l windows playbooks/windows-example/windows-update-example.yaml
+----
+
+you should see some output similar to:
+[source,bash]
+----
+
+PLAY [a series of tasks to demonstrate interaction with windows hosts via ansible] ********************************************************
+
+TASK [Gathering Facts] ********************************************************************************************************************
+ok: [172.16.94.155]
+
+TASK [ping hosts] *************************************************************************************************************************
+ok: [172.16.94.155]
+----
+
+
+
+==Section 2: win_update module
+
+The `win_updates` module will be critical in download and install Windows update process with Ansible.  It is formally documented at https://docs.ansible.com/ansible/latest/modules/win_updates_module.html and is maintained by the Ansible Core Team at Redhat.
+[IMPORTANT]
+This module is not guaranteed to have a backwards compatible interface.
+
+The `win_updates` module leverages category names to search for and apply updates. Additioanlly, the `state` argument defines whether or not `win_updates` should search for updates, or search AND install updates. The `state` parameter of this module defaults to 'installed'.  For clear readability of playbooks in the future, it is heavily advised to always provide the `state` parameter regardless if using `searched` or `installed` for its value.
+
+Additionally, a local logfile can be kept on the windows host, location is specified by the `log_path` paramter. It is important to note that the directory needs to already exist in order for ansible to write output to the logfile.
+
+Add the following to your `windows-update-example.yaml`
+
+
+.windows-update-example.yaml (example)
+[source,bash]
+----
+    - name: check for some windows updates
+      win_updates:
+        category_names:
+          - Application
+          - Connectors
+          - CriticalUpdates
+          - DefinitionUpdates
+          - DeveloperKits
+          - FeaturePacks
+          - Guidance
+          - SecurityUpdates
+          - ServicePacks
+          - Tools
+          - UpdateRollups
+          - Updates
+        state: searched
+        log_path: C:\ansible_wu.txt
+      register: FoundUpdates
+    - debug: var=FoundUpdates
+----
+
+You will notice the use of `register` and `debug` task parameters. In short, register saves the variable output, and debug prints the output for us to read. This will help us process the results of the search in a future section of this workshop.
+
+
+Let us also add the following 2 tasks so we can start to interpret the results of our windows update search
+
+.windows-update-example.yaml (example)
+[source,bash]
+----
+
+    - name: print total number of updates found
+      debug:
+        msg: "Found {{ FoundUpdates.found_update_count }} updates"
+
+    - name: print each update found
+      debug:
+        msg: "Found {{ FoundUpdates.updates }} "
+----
+
+
+
+by now, your complete `windows-update-example.yaml` should look like
+.windows-update-example.yaml (example)
+[source,bash]
+----
+- name: a series of tasks to demonstrate interaction with windows hosts via ansible
+  hosts: all
+
+  tasks:
+    - name: ping hosts
+      action: win_ping
+
+    - name: check for some windows updates
+      win_updates:
+        category_names:
+          - Application
+          - Connectors
+          - CriticalUpdates
+          - DefinitionUpdates
+          - DeveloperKits
+          - FeaturePacks
+          - Guidance
+          - SecurityUpdates
+          - ServicePacks
+          - Tools
+          - UpdateRollups
+          - Updates
+        state: searched
+        log_path: C:\ansible_wu.txt
+      register: FoundUpdates
+    - debug: var=FoundUpdates
+
+    - name: print total number of updates found
+      debug:
+        msg: "Found {{ FoundUpdates.found_update_count }} updates"
+
+    - name: print each update found
+      debug:
+        msg: "Found {{ FoundUpdates.updates }} "
+----
+
+== Section 3: Run the current playbook
+
+Lets run the playbook in its current form to review the output.
+
+[source,bash]
+----
+ansible-playbook -i windows.hosts -l windows playbooks/windows-example/windows-update-example.yaml
+----
+
+you should recieve some output that looks similar to:
+
+[source,bash]
+----
+PLAY [a series of tasks to demonstrate interaction with windows hosts via ansible] ********************************************************
+
+TASK [Gathering Facts] ********************************************************************************************************************
+ok: [172.16.94.155]
+
+TASK [ping hosts] *************************************************************************************************************************
+ok: [172.16.94.155]
+
+TASK [check for some windows updates] *****************************************************************************************************
+ok: [172.16.94.155]
+
+TASK [debug] ******************************************************************************************************************************
+ok: [172.16.94.155] => {
+    "FoundUpdates": {
+        "changed": false,
+        "failed": false,
+        "filtered_updates": {},
+        "found_update_count": 5,
+        "installed_update_count": 0,
+        "reboot_required": false,
+        "updates": {
+            "53fcde67-57e4-4d25-a81a-d4fbec0df09a": {
+                "id": "53fcde67-57e4-4d25-a81a-d4fbec0df09a",
+                "installed": false,
+                "kb": [
+                    "4052623"
+                ],
+                "title": "Update for Windows Defender Antivirus antimalware platform - KB4052623 (Version 4.18.1902.2)"
+            },
+            "641a2a50-7b4a-44d3-b729-2dea04ca2c5a": {
+                "id": "641a2a50-7b4a-44d3-b729-2dea04ca2c5a",
+                "installed": false,
+                "kb": [
+                    "4100347"
+                ],
+                "title": "2018-10 Update for Windows 10 Version 1803 for x64-based Systems (KB4100347)"
+            },
+            "960cef21-0c0d-4348-b09f-da2940e87a3d": {
+                "id": "960cef21-0c0d-4348-b09f-da2940e87a3d",
+                "installed": false,
+                "kb": [
+                    "2267602"
+                ],
+                "title": "Definition Update for Windows Defender Antivirus - KB2267602 (Definition 1.289.134.0)"
+            },
+            "97ad809a-0df1-432c-b16c-948bc610b632": {
+                "id": "97ad809a-0df1-432c-b16c-948bc610b632",
+                "installed": false,
+                "kb": [
+                    "4462930"
+                ],
+                "title": "Update for Adobe Flash Player for Windows 10 Version 1803 for x64-based Systems (KB4462930)"
+            },
+            "cfa0a5cf-ab26-4bc5-9a7b-a19b61655b3d": {
+                "id": "cfa0a5cf-ab26-4bc5-9a7b-a19b61655b3d",
+                "installed": false,
+                "kb": [
+                    "4487038"
+                ],
+                "title": "2019-02 Security Update for Adobe Flash Player for Windows 10 Version 1803 for x64-based Systems (KB4487038)"
+            }
+        }
+    }
+}
+
+TASK [print total number of updates found] ************************************************************************************************
+ok: [172.16.94.155] => {
+    "msg": "Found 5 updates"
+}
+
+TASK [print each update found] ************************************************************************************************************
+ok: [172.16.94.155] => {
+    "msg": "Found {u'641a2a50-7b4a-44d3-b729-2dea04ca2c5a': {u'kb': [u'4100347'], u'title': u'2018-10 Update for Windows 10 Version 1803 for x64-based Systems (KB4100347)', u'id': u'641a2a50-7b4a-44d3-b729-2dea04ca2c5a', u'installed': False}, u'cfa0a5cf-ab26-4bc5-9a7b-a19b61655b3d': {u'kb': [u'4487038'], u'title': u'2019-02 Security Update for Adobe Flash Player for Windows 10 Version 1803 for x64-based Systems (KB4487038)', u'id': u'cfa0a5cf-ab26-4bc5-9a7b-a19b61655b3d', u'installed': False}, u'53fcde67-57e4-4d25-a81a-d4fbec0df09a': {u'kb': [u'4052623'], u'title': u'Update for Windows Defender Antivirus antimalware platform - KB4052623 (Version 4.18.1902.2)', u'id': u'53fcde67-57e4-4d25-a81a-d4fbec0df09a', u'installed': False}, u'960cef21-0c0d-4348-b09f-da2940e87a3d': {u'kb': [u'2267602'], u'title': u'Definition Update for Windows Defender Antivirus - KB2267602 (Definition 1.289.134.0)', u'id': u'960cef21-0c0d-4348-b09f-da2940e87a3d', u'installed': False}, u'97ad809a-0df1-432c-b16c-948bc610b632': {u'kb': [u'4462930'], u'title': u'Update for Adobe Flash Player for Windows 10 Version 1803 for x64-based Systems (KB4462930)', u'id': u'97ad809a-0df1-432c-b16c-948bc610b632', u'installed': False}} "
+}
+
+PLAY RECAP ********************************************************************************************************************************
+172.16.94.155              : ok=6    changed=0    unreachable=0    failed=0
+
+----
+
+[NOTE]
+Your actual output may differ from the above based upon the number of patches that were found that need to be applied.  In the above example output there were 5 updates that need to be applied.
+
+
+
+
+
+
+
+{{< importPartial "footer/footer_azure.html" >}}
