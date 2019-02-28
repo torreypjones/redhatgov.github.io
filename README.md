@@ -1,3 +1,6 @@
+# info
+this should be https://github.com/torreypjones/redhatgov.github.io
+
 # RedHatGov.io
 
 [![Build Status](https://travis-ci.org/RedHatGov/redhatgov.github.io.svg?branch=docs)](https://travis-ci.org/RedHatGov/redhatgov.github.io)
