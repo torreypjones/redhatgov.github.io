@@ -78,7 +78,7 @@ the last task we need to add to our `windows-update-example.yaml` is
 
 some folks may want to observe the commented note in the playbook... can anyone say enhancement request?
 
-anyway - what we do here, is create a loop, to loop over the `updates` list that is found in the `FoundUpdates` variable that we registered from our search task; and pass each unique value into an `include` playbook. We will see what this included playbook looks like in a moment.
+anyway - what we do here, is create a loop, to loop over the `updates` list that is found in the `FoundUpdates` variable that we registered from our search task; and pass each unique value into an `include` playbook. This effectively means that each iteration of the loop will cause an execution of the `include` playbook with the parameter "v={{ update_item }}". We will see what this included playbook looks like in a moment.
 
 and now your complete `windows-update-example.yaml` should look like:
 .windows-update-example.yaml (Example)
@@ -134,7 +134,75 @@ and now your complete `windows-update-example.yaml` should look like:
 
 == Section 3: the windows-process-updates.yaml
 
-Need to finish this
+In the same directory create a file named `windows-process-updates.yaml` and add the following tasks:
+
+.windows-process-updates.yaml (Example)
+[source,bash]
+----
+- name: echo parameter passed in
+  debug:
+    msg: "processing {{ v }}"
+
+- name: we need to install this update
+  debug:
+    msg: "KB{{ item }} / {{ FoundUpdates.updates[v].title }} / {{ FoundUpdates.updates[v].installed }}"
+  when: FoundUpdates.updates[v].installed == false
+  with_items: "{{ FoundUpdates.updates[v].kb }}"
+
+
+- name: install single windows update
+  win_updates:
+    category_names:
+      - Application
+      - Connectors
+      - CriticalUpdates
+      - DefinitionUpdates
+      - DeveloperKits
+      - FeaturePacks
+      - Guidance
+      - SecurityUpdates
+      - ServicePacks
+      - Tools
+      - UpdateRollups
+      - Updates
+    log_path: C:\ansible_wu_install.txt
+    whitelist: "KB{{ item }}"
+    state: installed
+  when: FoundUpdates.updates[v].installed == false
+  with_items: "{{ FoundUpdates.updates[v].kb }}"
+  register: installed_result
+
+
+----
+
+the first 2 tasks are purely informational, and do not perform any action; they just print (using the debug module) information.  It may be important to note the variable structure used to access attributes of the FoundsUpdates sub items.
+
+The `install single windows update` task uses the same win_updates module as before, however the state is `installed` , and will use the KB value from `{{ FoundUpdates.updates[v].kb }}`. It `register` variable `instaalled_result` that can be used for future processing and consideration of success/failure of the installation attempt.
+
+
+== Section 4: whats next?
+
+As far as this workshop is concerned, you're finished, however some may desire to continue build out of this use case on their own. in which case here are some tasks that should drive things to think about...
+
+.windows-process-updates.yaml (Example)
+[source,bash]
+----
+- name: echo parameter passed in
+  debug:
+    msg: "{{ installed_result }}"
+
+- name: what to do next
+  debug:
+    msg: if installed_result.installed_update_count!=installed_result.found_update_count and installed_result.reboot_required==true then we need to reboot
+
+- name: what to do next attempt install again if needed
+  debug:
+    msg: if installed_result.installed_update_count!=installed_result.found_update_count then we need to reboot
+
+- name: what to do next final reboot
+  debug:
+    msg: if new_installed_result.reboot_required==true then we need to reboot or should this be in windows-update-example.yaml...
+----
 
 
 
